@@ -7,6 +7,6 @@
         "default_icon": "nkrabea-medium.png"
     },
     "chrome_url_overrides": {
-        "newtab": "newtab.html"
+        "newtab": "index.html"
     }
 }
