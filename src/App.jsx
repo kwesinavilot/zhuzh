@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
-import { CircleArrowRight, CircleArrowLeft } from 'lucide-react';
+import { CircleArrowRight, CircleArrowLeft, Search } from 'lucide-react';
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { Input } from "@/components/ui/input"
 
 function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -47,6 +48,13 @@ function App() {
     }
   }
 
+  // perform google search
+  const performGoogleSearch = (event) => {
+    event.preventDefault();
+    const query = event.target[0].value;
+    window.open(`https://www.google.com/search?q=${query}`, '_self');
+  }
+
   // set the initial wallpaper
   useEffect(() => {
     setInitialWallpaper();
@@ -62,8 +70,19 @@ function App() {
       >
         <div className="content">
           <div className="title">
-            <h2 className="text-4xl font-bold tracking-tight">WallyWally</h2>
+            <h2 className="text-4xl font-bold tracking-tight text-white">WallyWally</h2>
             <Badge variant="secondary">0.1.2</Badge>
+
+            <div className="shadow-sm w-auto mt-5 rounded-md focus:border border-input bg-white ring-offset-background focus-within:ring-1 focus-within:ring-ring">
+              <form className="w-full flex h-11 items-center pl-2 text-sm " action="" onSubmit={performGoogleSearch}>
+                <Search className="mr-3 h-5 w-5" />
+                <Input
+                  type="search"
+                  placeholder="What do you want to know?..."
+                  className="search-input text-slate-600 lg:w-[600px] md:w-[400px] text-sm font-normal border-0 bg-transparent p-0 outline-none placeholder:text-muted-foreground focus:ring-0"
+                />
+              </form>
+            </div>
           </div>
         </div>
 
