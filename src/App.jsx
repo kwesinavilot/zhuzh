@@ -1,10 +1,12 @@
-import './App.css'
-
 function App() {
   return (
     <>
-      <div>
-        <p>WallyWally is working!</p>
+      <div className="foundation">
+        <h3>WallyWally</h3>
+        <p>0.1.2</p>
+        <p>
+          This browser extension allows you to set your own wallpaper.
+        </p>
       </div>
     </>
   )
