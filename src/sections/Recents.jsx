@@ -16,17 +16,17 @@ export default function Recents() {
     {
       name: "Facebook",
       url: "https://www.facebook.com/",
-      icon: "icons/fb.jpg"
+      icon: "icons/faceb.png"
     },
     {
-      name: "X(Twitter)",
+      name: "X(Twitter) DreamHost - Web Hosting, Domain Names, WordPress & More",
       url: "https://twitter.com/",
-      icon: "twitter"
+      icon: "icons/x-1.png"
     },
     {
       name: "Canva",
       url: "https://www.canva.com/",
-      icon: "icons/canva-1.webp"
+      icon: "icons/canva-2.png"
     },
     {
       name: "LinkedIn",
@@ -44,7 +44,7 @@ export default function Recents() {
         const topFiveSites = sites.slice(0, 5).map((site) => ({
           title: site.title,
           url: site.url,
-          favIconUrl: `chrome-extension://${chrome.runtime.id}/_favicon/?pageUrl=${encodeURIComponent(site.url)}&size=32` || '/favicon.ico',
+          favIconUrl: `chrome-extension://${chrome.runtime.id}/_favicon/?pageUrl=${encodeURIComponent(site.url)}&size=38` || './nkrabea-medium.png',
         }));
 
         console.log(topFiveSites);
@@ -60,29 +60,28 @@ export default function Recents() {
   return (
     <>
       {isLoading ? (
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center mx-auto">
           <LoaderCircle className="animate-spin" />
         </div>
       ) : (
-        <section data-purpose="most-visited" className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+        <section data-purpose="most-visited" className="w-2/6 mx-auto grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
           {topSites.length === 0 ? (
             topGlobalSites.map((site, index) => (
               <a
                 href={site.url}
                 target="_self"
                 rel="noopener noreferrer"
-                className="items-center hover:no-underline hover:no-outline"
+                className="items-center hover:no-underline hover:no-outline min-w-0"
                 key={index}
               >
-                <div className="bg-black hover:bg-accent text-center rounded-md items-center">
+                <div className="mx-auto p-2.5 w-14 h-14 bg-slate-300 hover:bg-accent text-center rounded-md items-center">
                   <img
                     src={site.icon || './nkrabea-medium.png'}
                     alt={site.name}
-                    className="w-8 h-10"
                   />
                 </div>
 
-                <span className="text-sm truncate text-center text-white">{site.name}</span>
+                <p className=" text-sm truncate overflow-hidden text-center text-white">{site.name}</p>
               </a>
             ))
           ) : (
@@ -92,17 +91,16 @@ export default function Recents() {
                 href={site.url}
                 target="_self"
                 rel="noopener noreferrer"
-                className="items-center hover:no-underline hover:no-outline"
+                className="items-center hover:no-underline hover:no-outline min-w-0"
               >
-                <div className="bg-black hover:bg-accent text-center rounded-md items-center">
+                <div className="mx-auto p-2.5 w-14 h-14 bg-slate-300 hover:bg-accent text-center rounded-md items-center">
                   <img
                     src={site.favIconUrl || './nkrabea-medium.png'}
                     alt={site.title}
-                    className="w-8 h-10"
                   />
                 </div>
 
-                <span className="text-sm truncate text-center text-white">{site.title}</span>
+                <p className="text-sm truncate overflow-hidden text-center text-white">{site.title}</p>
               </a>
             ))
           )}

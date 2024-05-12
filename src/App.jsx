@@ -73,16 +73,16 @@ function App() {
           <div className="space-y-4">
             <section data-purpose="title">
               <h2 className="text-4xl font-bold tracking-tight text-white">WallyWally</h2>
-              <Badge variant="secondary">0.1.2</Badge>
+              <Badge variant="secondary">0.1.3</Badge>
             </section>
 
-            <section data-purpose="search" className="shadow-sm w-auto rounded-md focus:border border-input bg-white ring-offset-background focus-within:ring-1 focus-within:ring-ring">
+            <section data-purpose="search" className="shadow-sm lg:w-[700px] md:w-[550px] mx-auto rounded-md focus:border border-input bg-white ring-offset-background focus-within:ring-1 focus-within:ring-ring">
               <form className="w-full flex h-11 items-center pl-2 text-sm " action="" onSubmit={performGoogleSearch}>
                 <Search className="mr-3 h-5 w-5" />
                 <Input
                   type="search"
                   placeholder="What do you want to know?..."
-                  className="search-input text-slate-600 lg:w-[600px] md:w-[400px] text-sm font-normal border-0 bg-transparent p-0 outline-none placeholder:text-muted-foreground focus:ring-0"
+                  className="search-input text-slate-600 w-full text-sm font-normal border-0 bg-transparent p-0 outline-none placeholder:text-muted-foreground focus:ring-0"
                 />
               </form>
             </section>
