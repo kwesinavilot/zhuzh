@@ -1,4 +1,4 @@
-# WallyWally (v.0.1.3)
+# WallyWally (v.0.1.4)
 WallyWally is a lightweight browser extension that displays a beautiful space wallpaper as your background and provides a search bar for quick Google searches. It also showcases your top visited websites for easy access.
 
 ## Features
@@ -12,10 +12,10 @@ WallyWally is a lightweight browser extension that displays a beautiful space wa
 - SpaceX Twitter Images (Unofficial)
 
 ## SpaceX Wallpaper Source:
-The beautiful wallpapers displayed in WallyWally are sourced from the official SpaceX Twitter page (https://twitter.com/spacex).
+The beautiful wallpapers displayed in WallyWally are sourced from the official SpaceX Twitter page (https://twitter.com/SpaceX/media).
 
 ## Installation (Unpacked Extension)
-    Important Note: This extension is currently not available on the Chrome Web Store. You can install it by loading the unpacked extension folder in Chrome.
+**Important Note: This extension is currently not available on the Chrome Web Store. You can install it by loading the unpacked extension folder in Chrome.**
 
 1. Download the source code: Clone or download the source code for this project.
 2. Extract the folder: Extract the downloaded ZIP file to a convenient location on your computer.

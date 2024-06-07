@@ -1,16 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 import { CircleArrowRight, CircleArrowLeft, Search } from 'lucide-react';
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
-import Recents from "@/sections/Recents"
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import Recents from "@/sections/Recents";
+import { isExtensionContext } from './lib/essentials';
 
 function App() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [wallpaper, setWallpaper] = useState('');
-
-  // list of wallpapers
-  const wallpapers = [
+  const devWP = [
     'backgrounds/bg1.jpg',
     'backgrounds/bg2.jpeg',
     'backgrounds/bg3.jpeg',
@@ -19,47 +16,66 @@ function App() {
     'backgrounds/bg6.jpeg',
     'backgrounds/bg7.jpeg',
     'backgrounds/bg9.jpg',
-  ]
+  ];
 
-  // get and display a random wallpaper as the initial background
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [wallpaper, setWallpaper] = useState('');
+  const [wallpapers, setWallpapers] = useState([]);
+
+  const readWallpapersFromDirectory = (rootDir, folderName) => {
+    console.log("Root directory: " + rootDir.name + ", Folder: " + folderName);
+    rootDir.getDirectory(folderName, {}, (dirEntry) => {
+      const dirReader = dirEntry.createReader();
+
+      dirReader.readEntries((entries) => {
+        const wallpaperFiles = entries
+          .filter((entry) => entry.isFile)
+          .map((entry) => `${folderName}/${entry.name}`);
+        console.log("Wallpaper files: " + wallpaperFiles);
+
+        setWallpapers(wallpaperFiles);
+      });
+    });
+  };
+
   const setInitialWallpaper = () => {
     const randomIndex = Math.floor(Math.random() * wallpapers.length);
     setWallpaper(`url(${wallpapers[randomIndex]})`);
     setCurrentIndex(randomIndex);
-  }
+  };
 
-  // get and display the previous/next wallpaper
-  const changeWallpaper = (direction) => {
-    if (direction === 'previous') {
-      if (currentIndex === 0) {
-        setCurrentIndex(wallpapers.length - 1);
-        setWallpaper(`url(${wallpapers[wallpapers.length - 1]})`);
-      } else {
-        setCurrentIndex(currentIndex - 1);
-        setWallpaper(`url(${wallpapers[currentIndex - 1]})`);
-      }
+  useEffect(() => {
+    if (isExtensionContext()) {
+      chrome.runtime.getPackageDirectoryEntry((rootDir) => {
+        readWallpapersFromDirectory(rootDir, 'backgrounds');
+      });
     } else {
-      if (currentIndex === wallpapers.length - 1) {
-        setCurrentIndex(0);
-        setWallpaper(`url(${wallpapers[0]})`);
-      } else {
-        setCurrentIndex(currentIndex + 1);
-        setWallpaper(`url(${wallpapers[currentIndex + 1]})`);
-      }
+      setWallpapers(devWP);
     }
-  }
+  }, []);
 
-  // perform google search
+  useEffect(() => {
+    if (wallpapers.length > 0) {
+      setInitialWallpaper();
+    }
+  }, [wallpapers]);
+
+  const changeWallpaper = (direction) => {
+    let newIndex;
+    if (direction === 'previous') {
+      newIndex = currentIndex === 0 ? wallpapers.length - 1 : currentIndex - 1;
+    } else {
+      newIndex = currentIndex === wallpapers.length - 1 ? 0 : currentIndex + 1;
+    }
+    setCurrentIndex(newIndex);
+    setWallpaper(`url(${wallpapers[newIndex]})`);
+  };
+
   const performGoogleSearch = (event) => {
     event.preventDefault();
     const query = event.target[0].value;
     window.open(`https://www.google.com/search?q=${query}`, '_self');
-  }
-
-  // set the initial wallpaper
-  useEffect(() => {
-    setInitialWallpaper();
-  }, []);
+  };
 
   return (
     <>
@@ -102,7 +118,7 @@ function App() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -23,7 +23,9 @@
     ],
     "permissions": [
         "topSites",
-        "favicon"
+        "favicon",
+        "storage",
+        "tabs"
     ],
     "web_accessible_resources": [
         {

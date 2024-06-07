@@ -36,7 +36,6 @@ export default function Recents() {
   ];
 
   useEffect(() => {
-    console.log("Getting top sites...")
     setIsLoading(true);
 
     if (chrome.topSites && chrome.topSites.get) {
@@ -47,7 +46,6 @@ export default function Recents() {
           favIconUrl: `chrome-extension://${chrome.runtime.id}/_favicon/?pageUrl=${encodeURIComponent(site.url)}&size=38` || './nkrabea-medium.png',
         }));
 
-        console.log(topFiveSites);
         setTopSites(topFiveSites);
         setIsLoading(false);
       });
