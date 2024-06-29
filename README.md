@@ -1,4 +1,4 @@
-# Zhuzh (v.0.1.6)
+# Zhuzh (v.0.1.7)
 Zhuzh is a lightweight browser extension that displays a beautiful SpaceX wallpapers as your background and provides a search bar for quick Google searches. It also showcases your top visited websites for easy access.
 
 ## Features
