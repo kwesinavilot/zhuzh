@@ -1,7 +1,23 @@
 {
-  "name": "wallywally",
+  "name": "zhuzh",
+  "displayName": "Zhuzh",
+  "description": "This browser extension refreshes your browser with inspiring wallpapers of SpaceX. It also provides a search bar for quick Google searches.",
+  "author": {
+    "name": "Naviware Inc.",
+    "url": "https://github.com/naviwarernd",
+    "email": "andrewsankomahene@gmail.com"
+  },
   "private": true,
-  "version": "0.1.3",
+  "version": "0.1.5",
+  "license": "MIT",
+  "homepage": "https://github.com/kwesinavilot/wally_wally#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kwesinavilot/wally_wally"
+  },
+  "bugs": {
+    "url": "https://github.com/kwesinavilot/wally_wally/issues"
+  },
   "type": "module",
   "scripts": {
     "dev": "vite",

@@ -88,8 +88,7 @@ function App() {
         <div className="content">
           <div className="space-y-4">
             <section data-purpose="title">
-              <h2 className="text-4xl font-bold tracking-tight text-white">WallyWally</h2>
-              <Badge variant="secondary">0.1.3</Badge>
+              <h2 className="text-5xl text-white logotext">zhuzh</h2>
             </section>
 
             <section data-purpose="search" className="shadow-sm lg:w-[700px] md:w-[550px] mx-auto rounded-md focus:border border-input bg-white ring-offset-background focus-within:ring-1 focus-within:ring-ring">

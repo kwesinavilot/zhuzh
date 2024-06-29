@@ -1,5 +1,5 @@
-# WallyWally (v.0.1.4)
-WallyWally is a lightweight browser extension that displays a beautiful space wallpaper as your background and provides a search bar for quick Google searches. It also showcases your top visited websites for easy access.
+# Zhuzh (v.0.1.5)
+Zhuzh is a lightweight browser extension that displays a beautiful SpaceX wallpapers as your background and provides a search bar for quick Google searches. It also showcases your top visited websites for easy access.
 
 ## Features
 - Dynamic Wallpapers: Enjoy a collection of stunning wallpapers that change automatically or can be cycled through manually.
@@ -12,7 +12,7 @@ WallyWally is a lightweight browser extension that displays a beautiful space wa
 - SpaceX Twitter Images (Unofficial)
 
 ## SpaceX Wallpaper Source:
-The beautiful wallpapers displayed in WallyWally are sourced from the official SpaceX Twitter page (https://twitter.com/SpaceX/media).
+The beautiful wallpapers displayed in Zhuzh are sourced from the official SpaceX Twitter page (https://twitter.com/SpaceX/media).
 
 ## Installation (Unpacked Extension)
 **Important Note: This extension is currently not available on the Chrome Web Store. You can install it by loading the unpacked extension folder in Chrome.**
@@ -24,13 +24,13 @@ The beautiful wallpapers displayed in WallyWally are sourced from the official S
     - Enable Developer mode by toggling the switch in the top right corner.
     - Click on "Load unpacked" and select the extracted folder containing the extension's code (the folder where app.js resides).
 
-## Using WallyWally
-- WallyWally will set a random wallpaper and display the search bar.
+## Using Zhuzh
+- Zhuzh will set a random wallpaper and display the search bar.
 - Click on the navigation arrows to switch between wallpapers.
 - Type your search query in the search bar and press Enter to be redirected to a Google search results page.
 
 ## Contributing
-I appreciate any contributions to improve WallyWally. Feel free to fork the repository and submit pull requests.
+I appreciate any contributions to improve Zhuzh. Feel free to fork the repository and submit pull requests.
 
 ## License
 This project is licensed under the MIT License.

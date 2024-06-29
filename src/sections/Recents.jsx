@@ -43,7 +43,7 @@ export default function Recents() {
         const topFiveSites = sites.slice(0, 5).map((site) => ({
           title: site.title,
           url: site.url,
-          favIconUrl: `chrome-extension://${chrome.runtime.id}/_favicon/?pageUrl=${encodeURIComponent(site.url)}&size=38` || './nkrabea-medium.png',
+          favIconUrl: `chrome-extension://${chrome.runtime.id}/_favicon/?pageUrl=${encodeURIComponent(site.url)}&size=38` || './logo-white-sm.png',
         }));
 
         setTopSites(topFiveSites);
@@ -74,7 +74,7 @@ export default function Recents() {
               >
                 <div className="mx-auto p-2.5 w-14 h-14 bg-slate-300 hover:bg-accent text-center rounded-md items-center">
                   <img
-                    src={site.icon || './nkrabea-medium.png'}
+                    src={site.icon || './logo-white-sm.png'}
                     alt={site.name}
                   />
                 </div>
@@ -93,7 +93,7 @@ export default function Recents() {
               >
                 <div className="mx-auto p-2.5 w-14 h-14 bg-slate-300 hover:bg-accent text-center rounded-md items-center">
                   <img
-                    src={site.favIconUrl || './nkrabea-medium.png'}
+                    src={site.favIconUrl || './logo-white-sm.png'}
                     alt={site.title}
                   />
                 </div>
