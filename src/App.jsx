@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { CircleArrowRight, CircleArrowLeft, Search } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -16,11 +16,14 @@ function App() {
     'backgrounds/bg6.jpeg',
     'backgrounds/bg7.jpeg',
     'backgrounds/bg9.jpg',
+    'backgrounds/bg-vid-1.mp4',
+    'backgrounds/bg-vid-2.mp4',
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [wallpaper, setWallpaper] = useState('');
   const [wallpapers, setWallpapers] = useState([]);
+  const videoRef = useRef(null);
 
   const readWallpapersFromDirectory = (rootDir, folderName) => {
     console.log("Root directory: " + rootDir.name + ", Folder: " + folderName);
@@ -40,8 +43,8 @@ function App() {
 
   const setInitialWallpaper = () => {
     const randomIndex = Math.floor(Math.random() * wallpapers.length);
-    setWallpaper(`url(${wallpapers[randomIndex]})`);
     setCurrentIndex(randomIndex);
+    updateWallpaper(randomIndex);
   };
 
   useEffect(() => {
@@ -60,6 +63,25 @@ function App() {
     }
   }, [wallpapers]);
 
+  const updateWallpaper = (index) => {
+    const file = wallpapers[index];
+    if (file.endsWith('.mp4')) {
+      setWallpaper('');
+
+      if (videoRef.current) {
+        videoRef.current.src = file;
+        videoRef.current.style.display = 'block';
+        videoRef.current.play();
+      }
+    } else {
+      if (videoRef.current) {
+        videoRef.current.pause();
+        videoRef.current.style.display = 'none';
+      }
+      setWallpaper(`url(${file})`);
+    }
+  };
+
   const changeWallpaper = (direction) => {
     let newIndex;
     if (direction === 'previous') {
@@ -68,7 +90,7 @@ function App() {
       newIndex = currentIndex === wallpapers.length - 1 ? 0 : currentIndex + 1;
     }
     setCurrentIndex(newIndex);
-    setWallpaper(`url(${wallpapers[newIndex]})`);
+    updateWallpaper(newIndex);
   };
 
   const performGoogleSearch = (event) => {
@@ -85,35 +107,45 @@ function App() {
           backgroundImage: wallpaper,
         }}
       >
-        <div className="content">
-          <div className="space-y-4">
-            <section data-purpose="title">
-              <h2 className="text-5xl text-white logotext">zhuzh</h2>
-            </section>
+        <video
+          ref={videoRef}
+          className="video-background"
+          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 1, display: 'none' }}
+          loop
+          muted
+        ></video>
 
-            <section data-purpose="search" className="shadow-sm lg:w-[700px] md:w-[550px] mx-auto rounded-md focus:border border-input bg-white ring-offset-background focus-within:ring-1 focus-within:ring-ring">
-              <form className="w-full flex h-11 items-center pl-2 text-sm " action="" onSubmit={performGoogleSearch}>
-                <Search className="mr-3 h-5 w-5" />
-                <Input
-                  type="search"
-                  placeholder="What do you want to know?..."
-                  className="search-input text-slate-600 w-full text-sm font-normal border-0 bg-transparent p-0 outline-none placeholder:text-muted-foreground focus:ring-0"
-                />
-              </form>
-            </section>
+        <div className="top-layer" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 10 }}>
+          <div className="content">
+            <div className="space-y-4">
+              <section data-purpose="title">
+                <h2 className="text-5xl text-white logotext">zhuzh</h2>
+              </section>
 
-            <Recents />
+              <section data-purpose="search" className="shadow-sm lg:w-[700px] md:w-[550px] mx-auto rounded-md focus:border border-input bg-white ring-offset-background focus-within:ring-1 focus-within:ring-ring">
+                <form className="w-full flex h-11 items-center pl-2 text-sm " action="" onSubmit={performGoogleSearch}>
+                  <Search className="mr-3 h-5 w-5" />
+                  <Input
+                    type="search"
+                    placeholder="What do you want to know?..."
+                    className="search-input text-slate-600 w-full text-sm font-normal border-0 bg-transparent p-0 outline-none placeholder:text-muted-foreground focus:ring-0"
+                  />
+                </form>
+              </section>
+
+              <Recents />
+            </div>
           </div>
-        </div>
 
-        <div className="controllers space-x-5">
-          <Button variant="outline" size="icon" onClick={() => changeWallpaper('previous')}>
-            <CircleArrowLeft className="" />
-          </Button>
+          <div className="controllers space-x-5">
+            <Button variant="outline" size="icon" onClick={() => changeWallpaper('previous')}>
+              <CircleArrowLeft className="" />
+            </Button>
 
-          <Button variant="outline" size="icon" onClick={() => changeWallpaper('next')}>
-            <CircleArrowRight className="" />
-          </Button>
+            <Button variant="outline" size="icon" onClick={() => changeWallpaper('next')}>
+              <CircleArrowRight className="" />
+            </Button>
+          </div>
         </div>
       </div>
     </>
