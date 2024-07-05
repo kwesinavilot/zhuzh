@@ -29,15 +29,13 @@
     ],
     "permissions": [
         "topSites",
-        "favicon"
+        "favicon",
+        "activeTab"
     ],
     "web_accessible_resources": [
         {
             "resources": [
                 "_favicon/*"
-            ],
-            "matches": [
-                "<all_urls>"
             ],
             "extension_ids": [
                 "*"
