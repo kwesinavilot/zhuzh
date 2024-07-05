@@ -15,22 +15,9 @@
     "chrome_url_overrides": {
         "newtab": "index.html"
     },
-    "content_scripts": [
-        {
-            "all_frames": true,
-            "run_at": "document_start",
-            "matches": [
-                "<all_urls>"
-            ],
-            "js": [
-                "./content.js"
-            ]
-        }
-    ],
     "permissions": [
         "topSites",
-        "favicon",
-        "activeTab"
+        "favicon"
     ],
     "web_accessible_resources": [
         {
