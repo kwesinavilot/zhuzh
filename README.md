@@ -1,15 +1,21 @@
-# Zhuzh (v.0.1.8)
-Zhuzh is a lightweight browser extension that displays a beautiful SpaceX wallpapers as your background and provides a search bar for quick Google searches. It also showcases your top visited websites for easy access.
+# Zhuzh (v.0.2.0)
+Zhuzh is a lightweight browser extension that displays beautiful SpaceX wallpapers as your background and provides a search bar for quick searches. It also showcases your top visited websites for easy access.
 
 ## Features
-- Dynamic Wallpapers: Enjoy a collection of stunning wallpapers that change automatically or can be cycled through manually.
-- Search Functionality: Perform quick Google searches directly from the extension.
-- Top Visited Sites: Get a glimpse of your most visited websites for easy access.
+- **Dynamic Wallpapers**: Enjoy a collection of stunning SpaceX wallpapers that change automatically or can be cycled through manually
+- **Favorites System**: Save and cycle through your favorite wallpapers with the heart button
+- **Smart Search**: Uses Chrome's Search API to respect your default search engine settings
+- **Top Visited Sites**: Quick access to your most visited websites
+- **Settings Panel**: Customize your experience with theme options (Light/Dark mode)
+- **Tooltips**: Helpful hints for all controls
 
 ## Built With
-- React
-- Shadcn UI (for components)
-- SpaceX Twitter Images (Unofficial)
+- **React** - Frontend framework
+- **Shadcn UI Components** - UI component library
+- **Tailwind CSS** - Styling framework
+- **Lucide React** - Icon library
+- **Chrome Extensions API** - Browser integration
+- **SpaceX Twitter Images** - Wallpaper source (Unofficial)
 
 ## SpaceX Wallpaper Source:
 The beautiful wallpapers displayed in Zhuzh are sourced from the official SpaceX Twitter page (https://twitter.com/SpaceX/media).
@@ -25,9 +31,11 @@ The beautiful wallpapers displayed in Zhuzh are sourced from the official SpaceX
     - Click on "Load unpacked" and select the extracted folder containing the extension's code (the folder where app.js resides).
 
 ## Using Zhuzh
-- Zhuzh will set a random wallpaper and display the search bar.
-- Click on the navigation arrows to switch between wallpapers.
-- Type your search query in the search bar and press Enter to be redirected to a Google search results page.
+- **Wallpapers**: Zhuzh sets a random wallpaper on load. Use arrow buttons to navigate through wallpapers
+- **Favorites**: Click the heart button to save wallpapers as favorites. Toggle "Favs" to view only favorites
+- **Search**: Type your query and press Enter - uses your browser's default search engine
+- **Settings**: Click the gear icon (top-right) to access theme settings and other preferences
+- **Top Sites**: Your most visited websites appear below the search bar for quick access
 
 ## Contributing
 I appreciate any contributions to improve Zhuzh. Feel free to fork the repository and submit pull requests.

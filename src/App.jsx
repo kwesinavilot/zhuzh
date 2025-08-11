@@ -1,10 +1,16 @@
 import { useState, useEffect, useRef } from 'react';
-import { CircleArrowRight, CircleArrowLeft, Search, Heart } from 'lucide-react';
+import { CircleArrowRight, CircleArrowLeft, Search, Heart, Settings } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import Recents from "@/sections/Recents";
+import SettingsPanel from "@/sections/SettingsPanel";
 import { isExtensionContext } from './lib/essentials';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 function App() {
   const devWP = [
@@ -23,6 +29,10 @@ function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [wallpaper, setWallpaper] = useState('');
   const [wallpapers, setWallpapers] = useState([]);
+  const [favorites, setFavorites] = useState([]);
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [theme, setTheme] = useState('light');
   const videoRef = useRef(null);
 
   const readWallpapersFromDirectory = (rootDir, folderName) => {
@@ -63,6 +73,18 @@ function App() {
     }
   }, [wallpapers]);
 
+  useEffect(() => {
+    const savedFavorites = localStorage.getItem('zhuzh-favorites');
+    if (savedFavorites) {
+      setFavorites(JSON.parse(savedFavorites));
+    }
+    
+    const savedTheme = localStorage.getItem('zhuzh-theme');
+    if (savedTheme) {
+      setTheme(savedTheme);
+    }
+  }, []);
+
   const updateWallpaper = (index) => {
     const file = wallpapers[index];
     if (file.endsWith('.mp4')) {
@@ -82,15 +104,44 @@ function App() {
     }
   };
 
+  const getActiveWallpapers = () => {
+    return showFavoritesOnly ? wallpapers.filter(wp => favorites.includes(wp)) : wallpapers;
+  };
+
   const changeWallpaper = (direction) => {
-    let newIndex;
+    const activeWallpapers = getActiveWallpapers();
+    if (activeWallpapers.length === 0) return;
+
+    const currentWallpaper = wallpapers[currentIndex];
+    const currentActiveIndex = activeWallpapers.indexOf(currentWallpaper);
+
+    let newActiveIndex;
     if (direction === 'previous') {
-      newIndex = currentIndex === 0 ? wallpapers.length - 1 : currentIndex - 1;
+      newActiveIndex = currentActiveIndex === 0 ? activeWallpapers.length - 1 : currentActiveIndex - 1;
     } else {
-      newIndex = currentIndex === wallpapers.length - 1 ? 0 : currentIndex + 1;
+      newActiveIndex = currentActiveIndex === activeWallpapers.length - 1 ? 0 : currentActiveIndex + 1;
     }
+
+    const newWallpaper = activeWallpapers[newActiveIndex];
+    const newIndex = wallpapers.indexOf(newWallpaper);
     setCurrentIndex(newIndex);
     updateWallpaper(newIndex);
+  };
+
+  const toggleFavorite = () => {
+    const currentWallpaper = wallpapers[currentIndex];
+    const newFavorites = favorites.includes(currentWallpaper)
+      ? favorites.filter(fav => fav !== currentWallpaper)
+      : [...favorites, currentWallpaper];
+
+    setFavorites(newFavorites);
+    localStorage.setItem('zhuzh-favorites', JSON.stringify(newFavorites));
+  };
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    localStorage.setItem('zhuzh-theme', newTheme);
   };
 
   const performSearch = (event) => {
@@ -118,6 +169,12 @@ function App() {
         ></video>
 
         <div className="top-layer" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 10 }}>
+          {/* Settings Button */}
+          <div className="absolute top-4 right-4">
+            <Button variant="outline" size="icon" onClick={() => setShowSettings(true)}>
+              <Settings className="h-5 w-5" />
+            </Button>
+          </div>
           <div className="content">
             <div className="space-y-4">
               <section data-purpose="title">
@@ -139,16 +196,71 @@ function App() {
             </div>
           </div>
 
-          <div className="controllers space-x-5">
-            <Button variant="outline" size="icon" onClick={() => changeWallpaper('previous')}>
-              <CircleArrowLeft className="" />
-            </Button>
+          <div className="controllers space-x-5 justify-center align-center align-middle w-full items-center">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="outline" size="icon" onClick={() => changeWallpaper('previous')}>
+                  <CircleArrowLeft className="" />
+                </Button>
+              </TooltipTrigger>
 
-            <Button variant="outline" size="icon" onClick={() => changeWallpaper('next')}>
-              <CircleArrowRight className="" />
-            </Button>
+              <TooltipContent>
+                <p>Go to the previous wallpaper</p>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant={favorites.includes(wallpapers[currentIndex]) ? "default" : "outline"}
+                  size="icon"
+                  onClick={toggleFavorite}
+                >
+                  <Heart className={favorites.includes(wallpapers[currentIndex]) ? "fill-current" : ""} />
+                </Button>
+              </TooltipTrigger>
+
+              <TooltipContent>
+                <p>{favorites.includes(wallpapers[currentIndex]) ? "Remove from favorites" : "Add to favorites"}</p>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant={showFavoritesOnly ? "default" : "outline"}
+                  size="icon"
+                  onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
+                >
+                  {showFavoritesOnly ? 'All' : 'Favs'}
+                </Button>
+              </TooltipTrigger>
+
+              <TooltipContent>
+                <p>{showFavoritesOnly ? "Show all wallpapers" : "Show only favorites"}</p>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="outline" size="icon" onClick={() => changeWallpaper('next')}>
+                  <CircleArrowRight className="" />
+                </Button>
+              </TooltipTrigger>
+
+              <TooltipContent>
+                <p>Go to the next wallpaper</p>
+              </TooltipContent>
+            </Tooltip>
           </div>
         </div>
+
+        <SettingsPanel
+          showSettings={showSettings} 
+          setShowSettings={setShowSettings} 
+          theme={theme} 
+          setTheme={setTheme} 
+        />
       </div>
     </>
   );
