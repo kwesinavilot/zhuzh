@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { CircleArrowRight, CircleArrowLeft, Search } from 'lucide-react';
+import { CircleArrowRight, CircleArrowLeft, Search, Heart } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -93,10 +93,12 @@ function App() {
     updateWallpaper(newIndex);
   };
 
-  const performGoogleSearch = (event) => {
+  const performSearch = (event) => {
     event.preventDefault();
-    const query = event.target[0].value;
-    window.open(`https://www.google.com/search?q=${query}`, '_self');
+    const query = event.target[0].value.trim();
+    if (query) {
+      chrome.search.query({ text: query });
+    }
   };
 
   return (
@@ -123,7 +125,7 @@ function App() {
               </section>
 
               <section data-purpose="search" className="shadow-sm lg:w-[700px] md:w-[550px] mx-auto rounded-md focus:border border-input bg-white ring-offset-background focus-within:ring-1 focus-within:ring-ring">
-                <form className="w-full flex h-11 items-center pl-2 text-sm " action="" onSubmit={performGoogleSearch}>
+                <form className="w-full flex h-11 items-center pl-2 text-sm " action="" onSubmit={performSearch}>
                   <Search className="mr-3 h-5 w-5" />
                   <Input
                     type="search"

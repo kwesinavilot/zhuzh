@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Zhuzh",
-    "version": "0.1.7",
+    "version": "0.1.8",
     "description": "Zhuzh refreshes your browser with inspiring wallpapers of SpaceX rockets and provides a search bar for quick Google searches.",
     "action": {
         "default_icon": "logo-white.png"
@@ -17,7 +17,8 @@
     },
     "permissions": [
         "topSites",
-        "favicon"
+        "favicon",
+        "search"
     ],
     "web_accessible_resources": [
         {
