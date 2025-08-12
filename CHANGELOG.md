@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.3.0] - 2025-08-11
+
+### Added
+- **Clock & Date Widget**: Customizable time and date display in top-left corner
+- **Multiple Clock Styles**: Digital, analog, and minimal variants
+- **Multiple Date Styles**: Full, compact, minimal, and card variants
+- **Layout Options**: Vertical, horizontal (clock first), horizontal (date first)
+- **Visibility Controls**: Toggle clock and date on/off independently
+- **Time Format Options**: 12-hour and 24-hour format support
+- **Timezone Support**: Local time plus UTC, EST, PST, GMT, CET, JST
+- **Enhanced Settings**: Organized sections with toggle switches and dropdown selectors
+
+### Improved
+- Settings panel now scrollable to accommodate new options
+- Better component architecture with TimeWidget wrapper
+- All preferences persist in localStorage
+
+---
+
 ## [0.2.0] - 2025-08-11
 
 ### Added

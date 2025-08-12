@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import Recents from "@/sections/Recents";
 import SettingsPanel from "@/sections/SettingsPanel";
+import TimeWidget from "@/sections/TimeWidget";
 import { isExtensionContext } from './lib/essentials';
 import {
   Tooltip,
@@ -33,6 +34,13 @@ function App() {
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [theme, setTheme] = useState('light');
+  const [clockVariant, setClockVariant] = useState('digital');
+  const [dateVariant, setDateVariant] = useState('full');
+  const [layout, setLayout] = useState('vertical');
+  const [showClock, setShowClock] = useState(true);
+  const [showDate, setShowDate] = useState(true);
+  const [format24h, setFormat24h] = useState(true);
+  const [timezone, setTimezone] = useState('local');
   const videoRef = useRef(null);
 
   const readWallpapersFromDirectory = (rootDir, folderName) => {
@@ -82,6 +90,41 @@ function App() {
     const savedTheme = localStorage.getItem('zhuzh-theme');
     if (savedTheme) {
       setTheme(savedTheme);
+    }
+    
+    const savedClockVariant = localStorage.getItem('zhuzh-clock-variant');
+    if (savedClockVariant) {
+      setClockVariant(savedClockVariant);
+    }
+    
+    const savedDateVariant = localStorage.getItem('zhuzh-date-variant');
+    if (savedDateVariant) {
+      setDateVariant(savedDateVariant);
+    }
+    
+    const savedLayout = localStorage.getItem('zhuzh-layout');
+    if (savedLayout) {
+      setLayout(savedLayout);
+    }
+    
+    const savedShowClock = localStorage.getItem('zhuzh-show-clock');
+    if (savedShowClock !== null) {
+      setShowClock(savedShowClock === 'true');
+    }
+    
+    const savedShowDate = localStorage.getItem('zhuzh-show-date');
+    if (savedShowDate !== null) {
+      setShowDate(savedShowDate === 'true');
+    }
+    
+    const savedFormat24h = localStorage.getItem('zhuzh-format-24h');
+    if (savedFormat24h !== null) {
+      setFormat24h(savedFormat24h === 'true');
+    }
+    
+    const savedTimezone = localStorage.getItem('zhuzh-timezone');
+    if (savedTimezone) {
+      setTimezone(savedTimezone === 'local' ? 'local' : parseInt(savedTimezone));
     }
   }, []);
 
@@ -177,6 +220,20 @@ function App() {
           </div>
           <div className="content">
             <div className="space-y-4">
+              {/* Time Widget */}
+              <div className="absolute top-4 left-4">
+                <TimeWidget 
+                  layout={layout}
+                  showClock={showClock}
+                  showDate={showDate}
+                  clockVariant={clockVariant}
+                  dateVariant={dateVariant}
+                  theme={theme}
+                  format24h={format24h}
+                  timezone={timezone}
+                />
+              </div>
+              
               <section data-purpose="title">
                 <h2 className="text-5xl text-white logotext">zhuzh</h2>
               </section>
@@ -259,7 +316,21 @@ function App() {
           showSettings={showSettings} 
           setShowSettings={setShowSettings} 
           theme={theme} 
-          setTheme={setTheme} 
+          setTheme={setTheme}
+          clockVariant={clockVariant}
+          setClockVariant={setClockVariant}
+          dateVariant={dateVariant}
+          setDateVariant={setDateVariant}
+          layout={layout}
+          setLayout={setLayout}
+          showClock={showClock}
+          setShowClock={setShowClock}
+          showDate={showDate}
+          setShowDate={setShowDate}
+          format24h={format24h}
+          setFormat24h={setFormat24h}
+          timezone={timezone}
+          setTimezone={setTimezone}
         />
       </div>
     </>
