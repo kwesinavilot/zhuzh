@@ -6,6 +6,8 @@ import { Input } from "@/components/ui/input";
 import Recents from "@/sections/Recents";
 import SettingsPanel from "@/sections/SettingsPanel";
 import TimeWidget from "@/sections/TimeWidget";
+import CustomShortcuts from "@/sections/CustomShortcuts";
+import CurrencyConverter from "@/sections/CurrencyConverter";
 import { isExtensionContext } from './lib/essentials';
 import {
   Tooltip,
@@ -41,6 +43,7 @@ function App() {
   const [showDate, setShowDate] = useState(true);
   const [format24h, setFormat24h] = useState(true);
   const [timezone, setTimezone] = useState('local');
+  const [showCurrency, setShowCurrency] = useState(true);
   const videoRef = useRef(null);
 
   const readWallpapersFromDirectory = (rootDir, folderName) => {
@@ -126,6 +129,11 @@ function App() {
     if (savedTimezone) {
       setTimezone(savedTimezone === 'local' ? 'local' : parseInt(savedTimezone));
     }
+    
+    const savedShowCurrency = localStorage.getItem('zhuzh-show-currency');
+    if (savedShowCurrency !== null) {
+      setShowCurrency(savedShowCurrency === 'true');
+    }
   }, []);
 
   const updateWallpaper = (index) => {
@@ -181,12 +189,6 @@ function App() {
     localStorage.setItem('zhuzh-favorites', JSON.stringify(newFavorites));
   };
 
-  const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
-    localStorage.setItem('zhuzh-theme', newTheme);
-  };
-
   const performSearch = (event) => {
     event.preventDefault();
     const query = event.target[0].value.trim();
@@ -218,6 +220,14 @@ function App() {
               <Settings className="h-5 w-5" />
             </Button>
           </div>
+          
+          {/* Currency Converter */}
+          {showCurrency && (
+            <div className="absolute bottom-4 left-4">
+              <CurrencyConverter theme={theme} />
+            </div>
+          )}
+          
           <div className="content">
             <div className="space-y-4">
               {/* Time Widget */}
@@ -249,7 +259,7 @@ function App() {
                 </form>
               </section>
 
-              <Recents />
+              <CustomShortcuts />
             </div>
           </div>
 
@@ -331,6 +341,8 @@ function App() {
           setFormat24h={setFormat24h}
           timezone={timezone}
           setTimezone={setTimezone}
+          showCurrency={showCurrency}
+          setShowCurrency={setShowCurrency}
         />
       </div>
     </>

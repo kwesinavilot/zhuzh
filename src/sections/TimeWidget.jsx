@@ -29,8 +29,8 @@ export default function TimeWidget({
   if (layout === 'horizontal-clock-first') {
     return (
       <div className="flex items-center space-x-3">
-        {clockComponent}
-        {dateComponent}
+        <div className="flex-shrink-0">{clockComponent}</div>
+        <div className="flex-shrink-0">{dateComponent}</div>
       </div>
     );
   }
@@ -38,8 +38,8 @@ export default function TimeWidget({
   if (layout === 'horizontal-date-first') {
     return (
       <div className="flex items-center space-x-3">
-        {dateComponent}
-        {clockComponent}
+        <div className="flex-shrink-0">{dateComponent}</div>
+        <div className="flex-shrink-0">{clockComponent}</div>
       </div>
     );
   }

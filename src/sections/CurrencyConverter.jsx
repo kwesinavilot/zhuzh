@@ -1,0 +1,128 @@
+import { useState, useEffect } from 'react';
+import { DollarSign, TrendingUp, RefreshCw } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+
+const currencies = [
+  { code: 'USD', name: 'US Dollar', symbol: '$' },
+  { code: 'EUR', name: 'Euro', symbol: '€' },
+  { code: 'GBP', name: 'British Pound', symbol: '£' },
+  { code: 'JPY', name: 'Japanese Yen', symbol: '¥' },
+  { code: 'GHS', name: 'Ghanaian Cedi', symbol: '₵' },
+  { code: 'NGN', name: 'Nigerian Naira', symbol: '₦' },
+  { code: 'ZAR', name: 'South African Rand', symbol: 'R' },
+  { code: 'CAD', name: 'Canadian Dollar', symbol: 'C$' },
+  { code: 'AUD', name: 'Australian Dollar', symbol: 'A$' },
+  { code: 'CHF', name: 'Swiss Franc', symbol: 'Fr' }
+];
+
+export default function CurrencyConverter({ theme = 'light' }) {
+  const [baseCurrency, setBaseCurrency] = useState('GHS');
+  const [selectedCurrencies, setSelectedCurrencies] = useState(['USD', 'EUR', 'GBP', 'JPY']);
+  const [rates, setRates] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [lastUpdated, setLastUpdated] = useState(null);
+
+  const bgColor = theme === 'dark' ? 'bg-black/20' : 'bg-white/20';
+  const textColor = theme === 'dark' ? 'text-white' : 'text-white';
+
+  useEffect(() => {
+    const saved = localStorage.getItem('zhuzh-currency-settings');
+    if (saved) {
+      const settings = JSON.parse(saved);
+      setBaseCurrency(settings.baseCurrency || 'GHS');
+      setSelectedCurrencies(settings.selectedCurrencies || ['USD', 'EUR', 'GBP', 'JPY']);
+    }
+    fetchRates();
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('zhuzh-currency-settings', JSON.stringify({
+      baseCurrency,
+      selectedCurrencies
+    }));
+    fetchRates();
+  }, [baseCurrency, selectedCurrencies]);
+
+  const fetchRates = async () => {
+    setLoading(true);
+    try {
+      const appId = 'c9802fe961f94cccba40bc51e3522a18';
+      const response = await fetch(`https://openexchangerates.org/api/latest.json?app_id=${appId}`);
+      const data = await response.json();
+      
+      if (data.rates) {
+        setRates(data.rates);
+        setLastUpdated(new Date());
+      }
+    } catch (error) {
+      console.error('Failed to fetch exchange rates:', error);
+    }
+    setLoading(false);
+  };
+
+  const convertToBase = (fromCurrency, amount = 1) => {
+    if (!rates[baseCurrency] || !rates[fromCurrency]) return 0;
+    
+    // Convert from USD to base currency, then from source currency to USD
+    const usdToBase = rates[baseCurrency];
+    const usdToFrom = rates[fromCurrency];
+    
+    return (amount / usdToFrom) * usdToBase;
+  };
+
+  const getCurrencySymbol = (code) => {
+    return currencies.find(c => c.code === code)?.symbol || code;
+  };
+
+  return (
+    <div className={`${bgColor} backdrop-blur-sm rounded-lg p-4 min-w-[230px]`}>
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center">
+          <DollarSign className={`h-4 w-4 mr-2 ${textColor}`} />
+          <h3 className={`text-sm font-medium ${textColor}`}>Currency</h3>
+        </div>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={fetchRates}
+          disabled={loading}
+          className="h-6 w-6 p-0 hover:bg-white/20"
+        >
+          <RefreshCw className={`h-3 w-3 ${textColor} ${loading ? 'animate-spin' : ''}`} />
+        </Button>
+      </div>
+
+      <div className="space-y-2">
+        <div className={`text-xs ${textColor} opacity-75 mb-2`}>
+          Base: {getCurrencySymbol(baseCurrency)} {baseCurrency}
+        </div>
+        
+        {loading ? (
+          <div className={`text-sm ${textColor} text-center py-2`}>
+            Loading rates...
+          </div>
+        ) : (
+          selectedCurrencies.map((currency) => {
+            const rate = convertToBase(currency);
+            return (
+              <div key={currency} className="flex items-center justify-between">
+                <span className={`text-sm ${textColor}`}>
+                  {getCurrencySymbol(currency)} 1 {currency}
+                </span>
+                <span className={`text-sm font-mono ${textColor}`}>
+                  {rate > 0 ? `${getCurrencySymbol(baseCurrency)} ${rate.toFixed(2)}` : '--'}
+                </span>
+              </div>
+            );
+          })
+        )}
+      </div>
+
+      {lastUpdated && (
+        <div className={`text-xs ${textColor} opacity-50 mt-2`}>
+          Updated: {lastUpdated.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+        </div>
+      )}
+    </div>
+  );
+}

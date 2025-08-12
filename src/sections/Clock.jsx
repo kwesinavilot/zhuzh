@@ -85,12 +85,14 @@ export default function Clock({ variant = 'digital', theme = 'light', format24h 
 
   if (variant === 'minimal') {
     return (
-      <div className={`${textColor} text-2xl font-light tracking-wider`}>
-        {time.toLocaleTimeString([], { 
-          hour: '2-digit', 
-          minute: '2-digit',
-          hour12: !format24h
-        })}
+      <div className={`${bgColor} backdrop-blur-sm rounded-lg px-3 py-2`}>
+        <div className={`${textColor} text-xl font-light tracking-wider`}>
+          {time.toLocaleTimeString([], { 
+            hour: '2-digit', 
+            minute: '2-digit',
+            hour12: !format24h
+          })}
+        </div>
       </div>
     );
   }
