@@ -11,16 +11,51 @@ const timezones = [
   { label: 'JST (UTC+9)', value: 9 }
 ];
 
+const currencies = [
+  { code: 'USD', name: 'US Dollar', symbol: '$' },
+  { code: 'EUR', name: 'Euro', symbol: '€' },
+  { code: 'GBP', name: 'British Pound', symbol: '£' },
+  { code: 'JPY', name: 'Japanese Yen', symbol: '¥' },
+  { code: 'GHS', name: 'Ghanaian Cedi', symbol: '₵' },
+  { code: 'NGN', name: 'Nigerian Naira', symbol: '₦' },
+  { code: 'ZAR', name: 'South African Rand', symbol: 'R' },
+  { code: 'CAD', name: 'Canadian Dollar', symbol: 'C$' },
+  { code: 'AUD', name: 'Australian Dollar', symbol: 'A$' },
+  { code: 'CHF', name: 'Swiss Franc', symbol: 'Fr' },
+  { code: 'CNY', name: 'Chinese Yuan', symbol: '¥' },
+  { code: 'INR', name: 'Indian Rupee', symbol: '₹' },
+  { code: 'XOF', name: 'West African CFA Franc', symbol: 'CFA' }
+];
+
 export default function SettingsPanel({ 
   showSettings, setShowSettings, theme, setTheme, 
   clockVariant, setClockVariant, dateVariant, setDateVariant,
   layout, setLayout, showClock, setShowClock, showDate, setShowDate,
   format24h, setFormat24h, timezone, setTimezone,
-  showCurrency, setShowCurrency, maxQuickLinks, setMaxQuickLinks
+  showCurrency, setShowCurrency, maxQuickLinks, setMaxQuickLinks,
+  baseCurrency, setBaseCurrency, targetCurrencies, setTargetCurrencies
 }) {
   const handleThemeChange = (newTheme) => {
     setTheme(newTheme);
     localStorage.setItem('zhuzh-theme', newTheme);
+  };
+
+  const handleBaseCurrencyChange = (currency) => {
+    setBaseCurrency(currency);
+    localStorage.setItem('zhuzh-base-currency', currency);
+  };
+
+  const handleTargetCurrencyToggle = (currency) => {
+    let newTargets;
+    if (targetCurrencies.includes(currency)) {
+      newTargets = targetCurrencies.filter(c => c !== currency);
+    } else if (targetCurrencies.length < 4) {
+      newTargets = [...targetCurrencies, currency];
+    } else {
+      return; // Max 4 currencies
+    }
+    setTargetCurrencies(newTargets);
+    localStorage.setItem('zhuzh-target-currencies', JSON.stringify(newTargets));
   };
 
   if (!showSettings) return null;
@@ -251,6 +286,40 @@ export default function SettingsPanel({
                   >
                     {showCurrency ? <ToggleRight className="h-5 w-5 text-blue-500" /> : <ToggleLeft className="h-5 w-5" />}
                   </Button>
+                </div>
+                <div>
+                  <span className="text-sm font-medium mb-2 block">Base Currency</span>
+                  <select 
+                    className="w-full p-2 border rounded text-sm"
+                    value={baseCurrency}
+                    onChange={(e) => handleBaseCurrencyChange(e.target.value)}
+                  >
+                    {currencies.map((currency) => (
+                      <option key={currency.code} value={currency.code}>
+                        {currency.symbol} {currency.code} - {currency.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <span className="text-sm font-medium mb-2 block">Target Currencies (Max 4)</span>
+                  <div className="grid grid-cols-2 gap-1 max-h-32 overflow-y-auto">
+                    {currencies.filter(c => c.code !== baseCurrency).map((currency) => (
+                      <Button
+                        key={currency.code}
+                        variant={targetCurrencies.includes(currency.code) ? 'default' : 'outline'}
+                        size="sm"
+                        onClick={() => handleTargetCurrencyToggle(currency.code)}
+                        disabled={!targetCurrencies.includes(currency.code) && targetCurrencies.length >= 4}
+                        className="text-xs p-1 h-8"
+                      >
+                        {currency.symbol} {currency.code}
+                      </Button>
+                    ))}
+                  </div>
+                  <div className="text-xs text-gray-500 mt-1">
+                    Selected: {targetCurrencies.length}/4
+                  </div>
                 </div>
               </div>
             </div>

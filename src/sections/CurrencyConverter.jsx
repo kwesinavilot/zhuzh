@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { DollarSign, TrendingUp, RefreshCw } from 'lucide-react';
+import { DollarSign, RefreshCw } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
 const currencies = [
@@ -12,12 +12,13 @@ const currencies = [
   { code: 'ZAR', name: 'South African Rand', symbol: 'R' },
   { code: 'CAD', name: 'Canadian Dollar', symbol: 'C$' },
   { code: 'AUD', name: 'Australian Dollar', symbol: 'A$' },
-  { code: 'CHF', name: 'Swiss Franc', symbol: 'Fr' }
+  { code: 'CHF', name: 'Swiss Franc', symbol: 'Fr' },
+  { code: 'CNY', name: 'Chinese Yuan', symbol: '¥' },
+  { code: 'INR', name: 'Indian Rupee', symbol: '₹' },
+  { code: 'XOF', name: 'West African CFA Franc', symbol: 'CFA' }
 ];
 
-export default function CurrencyConverter({ theme = 'light' }) {
-  const [baseCurrency, setBaseCurrency] = useState('GHS');
-  const [selectedCurrencies, setSelectedCurrencies] = useState(['USD', 'EUR', 'GBP', 'JPY']);
+export default function CurrencyConverter({ theme = 'light', baseCurrency, targetCurrencies }) {
   const [rates, setRates] = useState({});
   const [loading, setLoading] = useState(false);
   const [lastUpdated, setLastUpdated] = useState(null);
@@ -26,22 +27,8 @@ export default function CurrencyConverter({ theme = 'light' }) {
   const textColor = theme === 'dark' ? 'text-white' : 'text-white';
 
   useEffect(() => {
-    const saved = localStorage.getItem('zhuzh-currency-settings');
-    if (saved) {
-      const settings = JSON.parse(saved);
-      setBaseCurrency(settings.baseCurrency || 'GHS');
-      setSelectedCurrencies(settings.selectedCurrencies || ['USD', 'EUR', 'GBP', 'JPY']);
-    }
     fetchRates();
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('zhuzh-currency-settings', JSON.stringify({
-      baseCurrency,
-      selectedCurrencies
-    }));
-    fetchRates();
-  }, [baseCurrency, selectedCurrencies]);
+  }, [baseCurrency, targetCurrencies]);
 
   const fetchRates = async () => {
     setLoading(true);
@@ -60,22 +47,29 @@ export default function CurrencyConverter({ theme = 'light' }) {
     setLoading(false);
   };
 
+  const convertFromUSD = (toCurrency, amount = 1) => {
+    if (!rates[toCurrency]) return 0;
+    return amount * rates[toCurrency];
+  };
+
   const convertToBase = (fromCurrency, amount = 1) => {
     if (!rates[baseCurrency] || !rates[fromCurrency]) return 0;
     
-    // Convert from USD to base currency, then from source currency to USD
-    const usdToBase = rates[baseCurrency];
-    const usdToFrom = rates[fromCurrency];
-    
-    return (amount / usdToFrom) * usdToBase;
+    // Convert from source currency to USD, then USD to base currency
+    const usdAmount = amount / rates[fromCurrency];
+    return usdAmount * rates[baseCurrency];
   };
 
   const getCurrencySymbol = (code) => {
     return currencies.find(c => c.code === code)?.symbol || code;
   };
 
+  if (!baseCurrency || !targetCurrencies || targetCurrencies.length === 0) {
+    return null;
+  }
+
   return (
-    <div className={`${bgColor} backdrop-blur-sm rounded-lg p-4 min-w-[230px]`}>
+    <div className={`${bgColor} backdrop-blur-sm rounded-lg p-4 min-w-[250px]`}>
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center">
           <DollarSign className={`h-4 w-4 mr-2 ${textColor}`} />
@@ -102,8 +96,11 @@ export default function CurrencyConverter({ theme = 'light' }) {
             Loading rates...
           </div>
         ) : (
-          selectedCurrencies.map((currency) => {
-            const rate = convertToBase(currency);
+          targetCurrencies.map((currency) => {
+            const rate = baseCurrency === 'USD' 
+              ? convertFromUSD(currency) 
+              : convertToBase(currency);
+            
             return (
               <div key={currency} className="flex items-center justify-between">
                 <span className={`text-sm ${textColor}`}>

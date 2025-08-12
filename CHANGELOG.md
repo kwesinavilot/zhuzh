@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.4.4] - 2025-08-12
+
+### Added
+- **Currency Settings**: Full customization of base currency and target currencies
+- **Base Currency Selector**: Choose from 12+ currencies including GHS, USD, EUR, GBP, JPY
+- **Target Currency Selection**: Pick up to 4 currencies for conversion with visual feedback
+- **Enhanced Currency Display**: Real exchange rates with proper conversion calculations
+
+### Fixed
+- **Currency Converter**: Fixed exchange rate calculations and API response handling
+- **Animated Refresh Button**: Refresh button now properly animates during loading
+- **Favicon Fallbacks**: Site icons now fallback to logo-white.png when unavailable
+- **Exchange Rate Display**: Shows actual rates instead of "--" placeholders
+
+### Improved
+- **Settings Organization**: Added comprehensive currency configuration section
+- **Persistent Storage**: All currency preferences save to localStorage
+- **Visual Feedback**: Shows selected currency count (X/4) in settings
+- **Error Handling**: Better fallback mechanisms for failed favicon loads
+
+---
+
 ## [0.4.3] - 2025-08-12
 
 ### Added
@@ -13,6 +35,8 @@
 - **User Control**: Full customization of quick access sites quantity
 - **Default Experience**: Maintains 5 links as default for new users
 - **Immediate Updates**: Changes apply instantly without page refresh
+
+---
 
 ## [0.4.2] - 2025-08-12
 
@@ -28,6 +52,8 @@
 - **Better Fallbacks**: Graceful handling when site favicons fail to load
 - **Compact Design**: Optimized spacing for showing more sites efficiently
 
+---
+
 ## [0.4.1] - 2025-08-11
 
 ### Fixed
@@ -39,6 +65,8 @@
 - **Error Handling**: Better fallback for failed API requests
 - **Loading States**: Added spinning refresh icon and loading messages
 - **Rate Formatting**: Shows "--" when exchange rates are unavailable
+
+---
 
 ## [0.4.0] - 2025-08-11
 
@@ -54,6 +82,8 @@
 - **Compact Display**: Shows up to 4 target currencies against base currency
 - **Last Updated**: Timestamp showing when rates were last fetched
 
+---
+
 ## [0.3.2] - 2025-08-11
 
 ### Added
@@ -68,6 +98,8 @@
 - **No Layout Disruption**: Modal prevents content shifting during editing
 - **Persistent Storage**: Remembers custom shortcuts and site removals
 
+---
+
 ## [0.3.1] - 2025-08-11
 
 ### Fixed
@@ -79,6 +111,8 @@
 - **Visual Hierarchy**: Added left borders and indentation for better settings navigation
 - **User Experience**: Clock settings (style, format, timezone) now grouped together
 - **User Experience**: Date settings (style, visibility) now grouped together
+
+---
 
 ## [0.3.0] - 2025-08-11
 
@@ -96,6 +130,8 @@
 - Settings panel now scrollable to accommodate new options
 - Better component architecture with TimeWidget wrapper
 - All preferences persist in localStorage
+
+---
 
 ## [0.2.0] - 2025-08-11
 
@@ -117,6 +153,8 @@
 ### Fixed
 - Resolved Chrome Web Store policy violation for "single purpose" requirement
 - Extension now compliant for resubmission to Chrome Web Store
+
+---
 
 ## [0.1.7] - Previous Release
 - SpaceX wallpaper new tab page

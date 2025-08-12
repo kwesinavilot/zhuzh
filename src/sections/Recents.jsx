@@ -19,7 +19,7 @@ export default function Recents() {
       icon: "icons/faceb.png"
     },
     {
-      name: "X(Twitter) DreamHost - Web Hosting, Domain Names, WordPress & More",
+      name: "X(Twitter)",
       url: "https://twitter.com/",
       icon: "icons/x-1.png"
     },

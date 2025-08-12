@@ -45,6 +45,8 @@ function App() {
   const [timezone, setTimezone] = useState('local');
   const [showCurrency, setShowCurrency] = useState(true);
   const [maxQuickLinks, setMaxQuickLinks] = useState(5);
+  const [baseCurrency, setBaseCurrency] = useState('GHS');
+  const [targetCurrencies, setTargetCurrencies] = useState(['USD', 'EUR', 'GBP', 'JPY']);
   const videoRef = useRef(null);
 
   const readWallpapersFromDirectory = (rootDir, folderName) => {
@@ -140,6 +142,16 @@ function App() {
     if (savedMaxQuickLinks) {
       setMaxQuickLinks(parseInt(savedMaxQuickLinks));
     }
+    
+    const savedBaseCurrency = localStorage.getItem('zhuzh-base-currency');
+    if (savedBaseCurrency) {
+      setBaseCurrency(savedBaseCurrency);
+    }
+    
+    const savedTargetCurrencies = localStorage.getItem('zhuzh-target-currencies');
+    if (savedTargetCurrencies) {
+      setTargetCurrencies(JSON.parse(savedTargetCurrencies));
+    }
   }, []);
 
   const updateWallpaper = (index) => {
@@ -230,7 +242,11 @@ function App() {
           {/* Currency Converter */}
           {showCurrency && (
             <div className="absolute bottom-4 left-4">
-              <CurrencyConverter theme={theme} />
+              <CurrencyConverter 
+                theme={theme} 
+                baseCurrency={baseCurrency}
+                targetCurrencies={targetCurrencies}
+              />
             </div>
           )}
           
@@ -351,6 +367,10 @@ function App() {
           setShowCurrency={setShowCurrency}
           maxQuickLinks={maxQuickLinks}
           setMaxQuickLinks={setMaxQuickLinks}
+          baseCurrency={baseCurrency}
+          setBaseCurrency={setBaseCurrency}
+          targetCurrencies={targetCurrencies}
+          setTargetCurrencies={setTargetCurrencies}
         />
       </div>
     </>

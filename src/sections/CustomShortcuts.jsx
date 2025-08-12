@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, Edit, Trash2, ExternalLink, X } from 'lucide-react';
+import { Plus, Edit, Trash2, X } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -28,7 +28,7 @@ export default function CustomShortcuts({ maxLinks = 5 }) {
         setTopSites(sites.slice(0, 10).map((site) => ({
           title: site.title,
           url: site.url,
-          faviconUrl: `https://www.google.com/s2/favicons?domain=${new URL(site.url).hostname.replace('www.', '')}&sz=64`
+          faviconUrl: `chrome-extension://${chrome.runtime.id}/_favicon/?pageUrl=${encodeURIComponent(site.url)}&size=38` || `https://www.google.com/s2/favicons?domain=${new URL(site.url).hostname.replace('www.', '')}&sz=64`
         })));
       });
     } else {
@@ -127,15 +127,11 @@ export default function CustomShortcuts({ maxLinks = 5 }) {
                       <img
                         src={faviconUrl}
                         alt={site.title}
-                        className="w-8 h-8 rounded"
+                        className="w-10 h-10 rounded"
                         onError={(e) => {
-                          e.target.style.display = 'none';
-                          e.target.nextSibling.style.display = 'flex';
+                          e.target.src = './logo-white.png';
                         }}
                       />
-                      <div className="w-8 h-8 bg-white/20 rounded flex items-center justify-center text-white text-xs font-bold hidden">
-                        {site.title.charAt(0).toUpperCase()}
-                      </div>
                     </div>
                   </div>
                   <span className="text-white text-xs font-medium truncate w-full leading-tight block mt-1">
