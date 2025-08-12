@@ -100,7 +100,7 @@ export default function CustomShortcuts({ maxLinks = 5 }) {
     const deletedUrls = shortcuts.filter(s => s.isDeleted).map(s => s.url);
     const customSites = shortcuts.filter(s => !s.isDeleted);
     const visibleTopSites = topSites.filter(site => !deletedUrls.includes(site.url));
-    
+
     return [...visibleTopSites, ...customSites].slice(0, maxLinks);
   };
 
@@ -111,9 +111,6 @@ export default function CustomShortcuts({ maxLinks = 5 }) {
       <section className="w-full max-w-2xl mx-auto">
         <div className="flex flex-wrap gap-3 justify-center">
           {allSites.map((site) => {
-            const domain = new URL(site.url).hostname.replace('www.', '');
-            const faviconUrl = site.faviconUrl || `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
-            
             return (
               <div key={site.url || site.id} className="group relative w-20">
                 <a
@@ -125,11 +122,11 @@ export default function CustomShortcuts({ maxLinks = 5 }) {
                   <div className="backdrop-blur-sm bg-white/10 flex flex-col hover:bg-white/20 items-center p-2 rounded-lg transition-colors">
                     <div className="w-10 h-10 flex items-center justify-center">
                       <img
-                        src={faviconUrl}
+                        src={site.faviconUrl}
                         alt={site.title}
                         className="w-10 h-10 rounded"
                         onError={(e) => {
-                          e.target.src = './logo-white.png';
+                          e.target.src = `https://www.google.com/s2/favicons?domain=${new URL(site.url).hostname.replace('www.', '')}&sz=64`;
                         }}
                       />
                     </div>

@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Zhuzh",
-    "version": "0.4.4",
+    "version": "0.4.5",
     "description": "This browser extension refreshes your browser with inspiring wallpapers of SpaceX. It also provides a search bar for quick Google searches.",
     "permissions": [
         "topSites",

@@ -50,7 +50,7 @@ function App() {
   const videoRef = useRef(null);
 
   const readWallpapersFromDirectory = (rootDir, folderName) => {
-    console.log("Root directory: " + rootDir.name + ", Folder: " + folderName);
+    // console.log("Root directory: " + rootDir.name + ", Folder: " + folderName);
     rootDir.getDirectory(folderName, {}, (dirEntry) => {
       const dirReader = dirEntry.createReader();
 
@@ -58,7 +58,8 @@ function App() {
         const wallpaperFiles = entries
           .filter((entry) => entry.isFile)
           .map((entry) => `${folderName}/${entry.name}`);
-        console.log("Wallpaper files: " + wallpaperFiles);
+
+        // console.log("Wallpaper files: " + wallpaperFiles);
 
         setWallpapers(wallpaperFiles);
       });
@@ -267,7 +268,7 @@ function App() {
               </div>
               
               <section data-purpose="title">
-                <h2 className="text-5xl text-white logotext">zhuzh</h2>
+                <h2 className="text-5xl text-white logotext">Zhuzh</h2>
               </section>
 
               <section data-purpose="search" className="shadow-sm lg:w-[700px] md:w-[550px] mx-auto rounded-md focus:border border-input bg-white ring-offset-background focus-within:ring-1 focus-within:ring-ring">

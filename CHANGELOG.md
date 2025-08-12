@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.4.5] - 2025-08-12
+
+### Added
+- **ScrollArea Component**: Integrated shadcn ScrollArea for better scrolling experience
+- **Nested Scrolling**: Currency selection area has its own scroll region
+- **Styled Scrollbars**: Consistent design system scrollbars throughout settings
+
+### Improved
+- **Settings Panel UX**: Smoother scrolling with proper styled scrollbars
+- **Layout Management**: Better height distribution with flex layout
+- **Accessibility**: Built-in accessibility features from shadcn ScrollArea
+- **Visual Consistency**: Scrollbars match the overall design system
+
+### Technical
+- **Component Integration**: Added ScrollArea import and implementation
+- **Responsive Design**: Adapts to content height properly
+- **Performance**: Optimized scrolling performance
+
+---
+
 ## [0.4.4] - 2025-08-12
 
 ### Added
