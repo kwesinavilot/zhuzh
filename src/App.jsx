@@ -44,6 +44,7 @@ function App() {
   const [format24h, setFormat24h] = useState(true);
   const [timezone, setTimezone] = useState('local');
   const [showCurrency, setShowCurrency] = useState(true);
+  const [maxQuickLinks, setMaxQuickLinks] = useState(5);
   const videoRef = useRef(null);
 
   const readWallpapersFromDirectory = (rootDir, folderName) => {
@@ -133,6 +134,11 @@ function App() {
     const savedShowCurrency = localStorage.getItem('zhuzh-show-currency');
     if (savedShowCurrency !== null) {
       setShowCurrency(savedShowCurrency === 'true');
+    }
+    
+    const savedMaxQuickLinks = localStorage.getItem('zhuzh-max-quick-links');
+    if (savedMaxQuickLinks) {
+      setMaxQuickLinks(parseInt(savedMaxQuickLinks));
     }
   }, []);
 
@@ -259,7 +265,7 @@ function App() {
                 </form>
               </section>
 
-              <CustomShortcuts />
+              <CustomShortcuts maxLinks={maxQuickLinks} />
             </div>
           </div>
 
@@ -343,6 +349,8 @@ function App() {
           setTimezone={setTimezone}
           showCurrency={showCurrency}
           setShowCurrency={setShowCurrency}
+          maxQuickLinks={maxQuickLinks}
+          setMaxQuickLinks={setMaxQuickLinks}
         />
       </div>
     </>

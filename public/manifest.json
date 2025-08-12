@@ -1,44 +1,18 @@
 {
     "manifest_version": 3,
     "name": "Zhuzh",
-    "version": "0.3.5",
-    "description": "Zhuzh refreshes your browser with inspiring wallpapers of SpaceX rockets and provides a search bar for quick Google searches.",
-    "action": {
-        "default_icon": "logo-white.png"
-    },
-    "icons": {
-        "16": "logo-white.png",
-        "32": "logo-white.png",
-        "48": "logo-white.png",
-        "128": "logo-white.png"
-    },
+    "version": "0.4.3",
+    "description": "This browser extension refreshes your browser with inspiring wallpapers of SpaceX. It also provides a search bar for quick Google searches.",
+    "permissions": [
+        "topSites",
+        "search"
+    ],
     "chrome_url_overrides": {
         "newtab": "index.html"
     },
-    "permissions": [
-        "topSites",
-        "favicon",
-        "search"
-    ],
-    "web_accessible_resources": [
-        {
-            "resources": [
-                "_favicon/*"
-            ],
-            "extension_ids": [
-                "*"
-            ]
-        }
-    ],
-    "content_security_policy": {
-        "extension_pages": "script-src 'self'; default-src 'self'; img-src chrome://favicon;"
-    },
-    "browser_specific_settings": {
-        "gecko": {
-            "id": "zhuzh@naviwarernd.com"
-        },
-        "safari": {
-            "id": "zhuzh@naviwarernd.com"
-        }
+    "icons": {
+        "16": "logo-white.png",
+        "48": "logo-white.png",
+        "128": "logo-white.png"
     }
 }

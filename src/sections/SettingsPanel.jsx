@@ -1,4 +1,4 @@
-import { X, Sun, Moon, Clock, Calendar, ToggleLeft, ToggleRight, DollarSign } from 'lucide-react';
+import { X, Sun, Moon, Clock, Calendar, ToggleLeft, ToggleRight, DollarSign, Link } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
 const timezones = [
@@ -16,7 +16,7 @@ export default function SettingsPanel({
   clockVariant, setClockVariant, dateVariant, setDateVariant,
   layout, setLayout, showClock, setShowClock, showDate, setShowDate,
   format24h, setFormat24h, timezone, setTimezone,
-  showCurrency, setShowCurrency
+  showCurrency, setShowCurrency, maxQuickLinks, setMaxQuickLinks
 }) {
   const handleThemeChange = (newTheme) => {
     setTheme(newTheme);
@@ -203,6 +203,33 @@ export default function SettingsPanel({
                     {option.label}
                   </Button>
                 ))}
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium mb-3 flex items-center">
+                <Link className="h-4 w-4 mr-2" />
+                Quick Links
+              </h3>
+              <div className="space-y-3 pl-6 border-l-2 border-gray-200">
+                <div>
+                  <span className="text-sm font-medium mb-2 block">Number of Links</span>
+                  <select 
+                    className="w-full p-2 border rounded text-sm"
+                    value={maxQuickLinks}
+                    onChange={(e) => {
+                      const value = parseInt(e.target.value);
+                      setMaxQuickLinks(value);
+                      localStorage.setItem('zhuzh-max-quick-links', value);
+                    }}
+                  >
+                    {[5, 6, 7, 8, 9, 10].map((num) => (
+                      <option key={num} value={num}>
+                        {num} links
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </div>
 

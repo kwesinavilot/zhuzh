@@ -8,7 +8,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
-export default function CustomShortcuts() {
+export default function CustomShortcuts({ maxLinks = 5 }) {
   const [shortcuts, setShortcuts] = useState([]);
   const [topSites, setTopSites] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -25,19 +25,20 @@ export default function CustomShortcuts() {
     // Get top visited sites
     if (chrome?.topSites) {
       chrome.topSites.get((sites) => {
-        setTopSites(sites.slice(0, 10));
+        setTopSites(sites.slice(0, 10).map((site) => ({
+          title: site.title,
+          url: site.url,
+          faviconUrl: `https://www.google.com/s2/favicons?domain=${new URL(site.url).hostname.replace('www.', '')}&sz=64`
+        })));
       });
     } else {
       // Fallback for development
       setTopSites([
-        { title: 'Gmail', url: 'https://gmail.com' },
-        { title: 'GitHub', url: 'https://github.com' },
-        { title: 'YouTube', url: 'https://youtube.com' },
-        { title: 'Google', url: 'https://google.com' },
-        { title: 'Stack Overflow', url: 'https://stackoverflow.com' },
-        { title: 'Twitter', url: 'https://twitter.com' },
-        { title: 'Facebook', url: 'https://facebook.com' },
-        { title: 'LinkedIn', url: 'https://linkedin.com' }
+        { title: 'Gmail', url: 'https://gmail.com', faviconUrl: 'https://www.google.com/s2/favicons?domain=gmail.com&sz=64' },
+        { title: 'GitHub', url: 'https://github.com', faviconUrl: 'https://www.google.com/s2/favicons?domain=github.com&sz=64' },
+        { title: 'YouTube', url: 'https://youtube.com', faviconUrl: 'https://www.google.com/s2/favicons?domain=youtube.com&sz=64' },
+        { title: 'Google', url: 'https://google.com', faviconUrl: 'https://www.google.com/s2/favicons?domain=google.com&sz=64' },
+        { title: 'Stack Overflow', url: 'https://stackoverflow.com', faviconUrl: 'https://www.google.com/s2/favicons?domain=stackoverflow.com&sz=64' }
       ]);
     }
   }, []);
@@ -49,10 +50,13 @@ export default function CustomShortcuts() {
 
   const addShortcut = () => {
     if (newShortcut.name && newShortcut.url) {
+      const url = newShortcut.url.startsWith('http') ? newShortcut.url : `https://${newShortcut.url}`;
+      const domain = new URL(url).hostname.replace('www.', '');
       const shortcut = {
         id: Date.now(),
         title: newShortcut.name,
-        url: newShortcut.url.startsWith('http') ? newShortcut.url : `https://${newShortcut.url}`,
+        url,
+        faviconUrl: `https://www.google.com/s2/favicons?domain=${domain}&sz=64`,
         isCustom: true
       };
       saveShortcuts([...shortcuts, shortcut]);
@@ -69,9 +73,11 @@ export default function CustomShortcuts() {
 
   const updateShortcut = () => {
     if (newShortcut.name && newShortcut.url) {
+      const url = newShortcut.url.startsWith('http') ? newShortcut.url : `https://${newShortcut.url}`;
+      const domain = new URL(url).hostname.replace('www.', '');
       const updated = shortcuts.map(s =>
         s.id === editingId
-          ? { ...s, title: newShortcut.name, url: newShortcut.url.startsWith('http') ? newShortcut.url : `https://${newShortcut.url}` }
+          ? { ...s, title: newShortcut.name, url, faviconUrl: `https://www.google.com/s2/favicons?domain=${domain}&sz=64` }
           : s
       );
       saveShortcuts(updated);
@@ -86,7 +92,6 @@ export default function CustomShortcuts() {
   };
 
   const removeSite = (url) => {
-    // Add to shortcuts as deleted so it doesn't show from topSites
     const deletedSite = { id: Date.now(), url, isDeleted: true };
     saveShortcuts([...shortcuts, deletedSite]);
   };
@@ -95,8 +100,8 @@ export default function CustomShortcuts() {
     const deletedUrls = shortcuts.filter(s => s.isDeleted).map(s => s.url);
     const customSites = shortcuts.filter(s => !s.isDeleted);
     const visibleTopSites = topSites.filter(site => !deletedUrls.includes(site.url));
-
-    return [...visibleTopSites, ...customSites].slice(0, 10);
+    
+    return [...visibleTopSites, ...customSites].slice(0, maxLinks);
   };
 
   const allSites = getAllSites();
@@ -104,14 +109,10 @@ export default function CustomShortcuts() {
   return (
     <>
       <section className="w-full max-w-2xl mx-auto">
-        {/* <div className="mb-4">
-          <h3 className="text-white text-lg font-medium">Quick Links</h3>
-        </div> */}
-
         <div className="flex flex-wrap gap-3 justify-center">
-          {allSites.map((site, index) => {
+          {allSites.map((site) => {
             const domain = new URL(site.url).hostname.replace('www.', '');
-            const faviconUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+            const faviconUrl = site.faviconUrl || `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
             
             return (
               <div key={site.url || site.id} className="group relative w-20">
@@ -119,12 +120,12 @@ export default function CustomShortcuts() {
                   href={site.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block bg-white/10 backdrop-blur-sm rounded-lg p-2 hover:bg-white/20 transition-colors text-center"
+                  className="block text-center"
                 >
-                  <div className="flex flex-col items-center space-y-1">
+                  <div className="backdrop-blur-sm bg-white/10 flex flex-col hover:bg-white/20 items-center p-2 rounded-lg transition-colors">
                     <div className="w-10 h-10 flex items-center justify-center">
-                      <img 
-                        src={faviconUrl} 
+                      <img
+                        src={faviconUrl}
                         alt={site.title}
                         className="w-8 h-8 rounded"
                         onError={(e) => {
@@ -136,50 +137,53 @@ export default function CustomShortcuts() {
                         {site.title.charAt(0).toUpperCase()}
                       </div>
                     </div>
-                    <span className="text-white text-xs font-medium truncate w-full leading-tight">{site.title}</span>
                   </div>
+                  <span className="text-white text-xs font-medium truncate w-full leading-tight block mt-1">
+                    {site.title}
+                  </span>
                 </a>
-              <div className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity flex space-x-1">
-                {site.isCustom && (
+
+                <div className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity flex space-x-1">
+                  {site.isCustom && (
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => editShortcut(site)}
+                          className="h-5 w-5 p-0 hover:bg-white/20"
+                        >
+                          <Edit className="h-2 w-2 text-white" />
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Edit</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  )}
+
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => editShortcut(site)}
+                        onClick={() => site.isCustom ? deleteShortcut(site.id) : removeSite(site.url)}
                         className="h-5 w-5 p-0 hover:bg-white/20"
                       >
-                        <Edit className="h-2 w-2 text-white" />
+                        <Trash2 className="h-2 w-2 text-white" />
                       </Button>
                     </TooltipTrigger>
                     <TooltipContent>
-                      <p>Edit</p>
+                      <p>{site.isCustom ? 'Delete' : 'Remove'}</p>
                     </TooltipContent>
                   </Tooltip>
-                )}
-
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => site.isCustom ? deleteShortcut(site.id) : removeSite(site.url)}
-                      className="h-5 w-5 p-0 hover:bg-white/20"
-                    >
-                      <Trash2 className="h-2 w-2 text-white" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>{site.isCustom ? 'Delete' : 'Remove'}</p>
-                  </TooltipContent>
-                </Tooltip>
-              </div>
+                </div>
               </div>
             );
           })}
 
           {/* Add Button */}
-          {allSites.length < 10 && (
+          {allSites.length < maxLinks && (
             <div className="group relative w-20">
               <Button
                 onClick={() => setShowModal(true)}

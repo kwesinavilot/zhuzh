@@ -1,6 +1,20 @@
 # Changelog
 
-## [0.4.2] - 2025-01-27
+## [0.4.3] - 2025-08-12
+
+### Added
+- **Customizable Quick Links Count**: Users can now select 5-10 quick links from settings
+- **Quick Links Settings**: New dedicated settings section with dropdown selector
+- **Dynamic Link Limits**: Add button and display adapt to selected count
+- **Persistent Preference**: Quick links count setting saves to localStorage
+
+### Improved
+- **Settings Organization**: Added Quick Links section with Link icon
+- **User Control**: Full customization of quick access sites quantity
+- **Default Experience**: Maintains 5 links as default for new users
+- **Immediate Updates**: Changes apply instantly without page refresh
+
+## [0.4.2] - 2025-08-12
 
 ### Added
 - **Site Logos**: Quick links now display favicons with fallback to first letter of site name
@@ -14,7 +28,7 @@
 - **Better Fallbacks**: Graceful handling when site favicons fail to load
 - **Compact Design**: Optimized spacing for showing more sites efficiently
 
-## [0.4.1] - 2025-01-27
+## [0.4.1] - 2025-08-11
 
 ### Fixed
 - **Settings Panel**: Resolved blank page issue by adding missing DollarSign icon import
@@ -26,7 +40,7 @@
 - **Loading States**: Added spinning refresh icon and loading messages
 - **Rate Formatting**: Shows "--" when exchange rates are unavailable
 
-## [0.4.0] - 2025-01-27
+## [0.4.0] - 2025-08-11
 
 ### Added
 - **Currency Converter**: Real-time exchange rates with Open Exchange Rates API
@@ -40,7 +54,7 @@
 - **Compact Display**: Shows up to 4 target currencies against base currency
 - **Last Updated**: Timestamp showing when rates were last fetched
 
-## [0.3.2] - 2025-01-27
+## [0.3.2] - 2025-08-11
 
 ### Added
 - **Modal Interface**: Clean popup form for adding/editing quick links
@@ -54,7 +68,7 @@
 - **No Layout Disruption**: Modal prevents content shifting during editing
 - **Persistent Storage**: Remembers custom shortcuts and site removals
 
-## [0.3.1] - 2025-01-27
+## [0.3.1] - 2025-08-11
 
 ### Fixed
 - **Horizontal Layout Sizing**: Clock and date widgets now maintain consistent sizes in horizontal layouts
