@@ -24,7 +24,9 @@ const currencies = [
   { code: 'AUD', name: 'Australian Dollar', symbol: 'A$' },
   { code: 'CHF', name: 'Swiss Franc', symbol: 'Fr' },
   { code: 'CNY', name: 'Chinese Yuan', symbol: '¥' },
-  { code: 'INR', name: 'Indian Rupee', symbol: '₹' }
+  { code: 'INR', name: 'Indian Rupee', symbol: '₹' },
+  { code: 'XOF', name: 'West African CFA Franc', symbol: 'CFA' },
+  { code: 'KSH', name: 'Kenyan Shilling', symbol: 'Ksh' }
 ];
 
 export default function SettingsPanel({ 

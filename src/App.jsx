@@ -93,62 +93,62 @@ function App() {
     if (savedFavorites) {
       setFavorites(JSON.parse(savedFavorites));
     }
-    
+
     const savedTheme = localStorage.getItem('zhuzh-theme');
     if (savedTheme) {
       setTheme(savedTheme);
     }
-    
+
     const savedClockVariant = localStorage.getItem('zhuzh-clock-variant');
     if (savedClockVariant) {
       setClockVariant(savedClockVariant);
     }
-    
+
     const savedDateVariant = localStorage.getItem('zhuzh-date-variant');
     if (savedDateVariant) {
       setDateVariant(savedDateVariant);
     }
-    
+
     const savedLayout = localStorage.getItem('zhuzh-layout');
     if (savedLayout) {
       setLayout(savedLayout);
     }
-    
+
     const savedShowClock = localStorage.getItem('zhuzh-show-clock');
     if (savedShowClock !== null) {
       setShowClock(savedShowClock === 'true');
     }
-    
+
     const savedShowDate = localStorage.getItem('zhuzh-show-date');
     if (savedShowDate !== null) {
       setShowDate(savedShowDate === 'true');
     }
-    
+
     const savedFormat24h = localStorage.getItem('zhuzh-format-24h');
     if (savedFormat24h !== null) {
       setFormat24h(savedFormat24h === 'true');
     }
-    
+
     const savedTimezone = localStorage.getItem('zhuzh-timezone');
     if (savedTimezone) {
       setTimezone(savedTimezone === 'local' ? 'local' : parseInt(savedTimezone));
     }
-    
+
     const savedShowCurrency = localStorage.getItem('zhuzh-show-currency');
     if (savedShowCurrency !== null) {
       setShowCurrency(savedShowCurrency === 'true');
     }
-    
+
     const savedMaxQuickLinks = localStorage.getItem('zhuzh-max-quick-links');
     if (savedMaxQuickLinks) {
       setMaxQuickLinks(parseInt(savedMaxQuickLinks));
     }
-    
+
     const savedBaseCurrency = localStorage.getItem('zhuzh-base-currency');
     if (savedBaseCurrency) {
       setBaseCurrency(savedBaseCurrency);
     }
-    
+
     const savedTargetCurrencies = localStorage.getItem('zhuzh-target-currencies');
     if (savedTargetCurrencies) {
       setTargetCurrencies(JSON.parse(savedTargetCurrencies));
@@ -235,27 +235,32 @@ function App() {
         <div className="top-layer" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 10 }}>
           {/* Settings Button */}
           <div className="absolute top-4 right-4">
-            <Button variant="outline" size="icon" onClick={() => setShowSettings(true)}>
+            <Button 
+            variant="outline" 
+            size="icon" 
+            onClick={() => setShowSettings(true)}
+            className="backdrop-blur-sm bg-white/20 border disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-ring font-medium h-10 hover: hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center ring-offset-background rounded-md text-black text-sm text-white transition-colors"
+            >
               <Settings className="h-5 w-5" />
             </Button>
           </div>
-          
+
           {/* Currency Converter */}
           {showCurrency && (
             <div className="absolute bottom-4 left-4">
-              <CurrencyConverter 
-                theme={theme} 
+              <CurrencyConverter
+                theme={theme}
                 baseCurrency={baseCurrency}
                 targetCurrencies={targetCurrencies}
               />
             </div>
           )}
-          
+
           <div className="content">
             <div className="space-y-4">
               {/* Time Widget */}
               <div className="absolute top-4 left-4">
-                <TimeWidget 
+                <TimeWidget
                   layout={layout}
                   showClock={showClock}
                   showDate={showDate}
@@ -266,7 +271,7 @@ function App() {
                   timezone={timezone}
                 />
               </div>
-              
+
               <section data-purpose="title">
                 <h2 className="text-5xl text-white logotext">Zhuzh</h2>
               </section>
@@ -289,7 +294,7 @@ function App() {
           <div className="controllers space-x-5 justify-center align-center align-middle w-full items-center">
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="outline" size="icon" onClick={() => changeWallpaper('previous')}>
+                <Button className="backdrop-blur-sm bg-white/20 border disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-ring font-medium h-10 hover: hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center ring-offset-background rounded-md text-black text-sm text-white transition-colors w-10 whitespace-nowrap" variant="outline" size="icon" onClick={() => changeWallpaper('previous')}>
                   <CircleArrowLeft className="" />
                 </Button>
               </TooltipTrigger>
@@ -305,6 +310,7 @@ function App() {
                   variant={favorites.includes(wallpapers[currentIndex]) ? "default" : "outline"}
                   size="icon"
                   onClick={toggleFavorite}
+                  className="backdrop-blur-sm bg-white/20 border disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-ring font-medium h-10 hover: hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center ring-offset-background rounded-md text-black text-sm text-white transition-colors w-10 whitespace-nowrap"
                 >
                   <Heart className={favorites.includes(wallpapers[currentIndex]) ? "fill-current" : ""} />
                 </Button>
@@ -321,6 +327,7 @@ function App() {
                   variant={showFavoritesOnly ? "default" : "outline"}
                   size="icon"
                   onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
+                  className="backdrop-blur-sm bg-white/20 border disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-ring font-medium h-10 hover: hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center ring-offset-background rounded-md text-black text-sm text-white transition-colors w-10 whitespace-nowrap"
                 >
                   {showFavoritesOnly ? 'All' : 'Favs'}
                 </Button>
@@ -333,7 +340,12 @@ function App() {
 
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="outline" size="icon" onClick={() => changeWallpaper('next')}>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => changeWallpaper('next')}
+                  className="backdrop-blur-sm bg-white/20 border disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-ring font-medium h-10 hover: hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center ring-offset-background rounded-md text-black text-sm text-white transition-colors w-10 whitespace-nowrap"
+                >
                   <CircleArrowRight className="" />
                 </Button>
               </TooltipTrigger>
@@ -346,9 +358,9 @@ function App() {
         </div>
 
         <SettingsPanel
-          showSettings={showSettings} 
-          setShowSettings={setShowSettings} 
-          theme={theme} 
+          showSettings={showSettings}
+          setShowSettings={setShowSettings}
+          theme={theme}
           setTheme={setTheme}
           clockVariant={clockVariant}
           setClockVariant={setClockVariant}
