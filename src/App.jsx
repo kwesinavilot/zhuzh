@@ -239,7 +239,7 @@ function App() {
             variant="outline" 
             size="icon" 
             onClick={() => setShowSettings(true)}
-            className="backdrop-blur-sm bg-white/20 border disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-ring font-medium h-10 hover: hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center ring-offset-background rounded-md text-black text-sm text-white transition-colors"
+            className="backdrop-blur-sm bg-white/20 border-0 disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-ring font-medium h-10 hover: hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center ring-offset-background rounded-md text-black text-sm text-white transition-colors"
             >
               <Settings className="h-5 w-5" />
             </Button>
@@ -273,7 +273,7 @@ function App() {
               </div>
 
               <section data-purpose="title">
-                <h2 className="text-5xl text-white logotext">Zhuzh</h2>
+                <h2 className="text-5xl text-white logotext">zhuzh</h2>
               </section>
 
               <section data-purpose="search" className="shadow-sm lg:w-[700px] md:w-[550px] mx-auto rounded-md focus:border border-input bg-white ring-offset-background focus-within:ring-1 focus-within:ring-ring">
@@ -294,7 +294,7 @@ function App() {
           <div className="controllers space-x-5 justify-center align-center align-middle w-full items-center">
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button className="backdrop-blur-sm bg-white/20 border disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-ring font-medium h-10 hover: hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center ring-offset-background rounded-md text-black text-sm text-white transition-colors w-10 whitespace-nowrap" variant="outline" size="icon" onClick={() => changeWallpaper('previous')}>
+                <Button className="backdrop-blur-sm bg-white/20 border-0 disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-ring font-medium h-10 hover: hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center ring-offset-background rounded-md text-black text-sm text-white transition-colors w-10 whitespace-nowrap" variant="outline" size="icon" onClick={() => changeWallpaper('previous')}>
                   <CircleArrowLeft className="" />
                 </Button>
               </TooltipTrigger>
@@ -310,7 +310,7 @@ function App() {
                   variant={favorites.includes(wallpapers[currentIndex]) ? "default" : "outline"}
                   size="icon"
                   onClick={toggleFavorite}
-                  className="backdrop-blur-sm bg-white/20 border disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-ring font-medium h-10 hover: hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center ring-offset-background rounded-md text-black text-sm text-white transition-colors w-10 whitespace-nowrap"
+                  className="backdrop-blur-sm bg-white/20 border-0 disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-ring font-medium h-10 hover: hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center ring-offset-background rounded-md text-black text-sm text-white transition-colors w-10 whitespace-nowrap"
                 >
                   <Heart className={favorites.includes(wallpapers[currentIndex]) ? "fill-current" : ""} />
                 </Button>
@@ -327,7 +327,7 @@ function App() {
                   variant={showFavoritesOnly ? "default" : "outline"}
                   size="icon"
                   onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
-                  className="backdrop-blur-sm bg-white/20 border disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-ring font-medium h-10 hover: hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center ring-offset-background rounded-md text-black text-sm text-white transition-colors w-10 whitespace-nowrap"
+                  className="backdrop-blur-sm bg-white/20 border-0 disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-ring font-medium h-10 hover: hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center ring-offset-background rounded-md text-black text-sm text-white transition-colors w-10 whitespace-nowrap"
                 >
                   {showFavoritesOnly ? 'All' : 'Favs'}
                 </Button>
@@ -344,7 +344,7 @@ function App() {
                   variant="outline"
                   size="icon"
                   onClick={() => changeWallpaper('next')}
-                  className="backdrop-blur-sm bg-white/20 border disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-ring font-medium h-10 hover: hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center ring-offset-background rounded-md text-black text-sm text-white transition-colors w-10 whitespace-nowrap"
+                  className="backdrop-blur-sm bg-white/20 border-0 disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-ring font-medium h-10 hover: hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center ring-offset-background rounded-md text-black text-sm text-white transition-colors w-10 whitespace-nowrap"
                 >
                   <CircleArrowRight className="" />
                 </Button>

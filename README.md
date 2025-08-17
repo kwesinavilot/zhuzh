@@ -1,4 +1,4 @@
-# Zhuzh (0.4.5)
+# Zhuzh (0.4.6)
 Zhuzh is a lightweight browser extension that displays beautiful SpaceX wallpapers as your background and provides a search bar for quick searches. It also showcases your top visited websites for easy access.
 
 ## Features
@@ -9,6 +9,7 @@ Zhuzh is a lightweight browser extension that displays beautiful SpaceX wallpape
 - **Currency Converter**: Real-time exchange rates with customizable base currency and multiple target currencies
 - **Clock & Date Widget**: Customizable time and date display with multiple styles
 - **Settings Panel**: Comprehensive customization with theme, layout, and time format options
+- **Welcome Page**: Guided onboarding experience for new users with feature overview
 - **Tooltips**: Helpful hints for all controls
 
 ## Built With
@@ -31,6 +32,7 @@ The beautiful wallpapers displayed in Zhuzh are sourced from the official SpaceX
     - Open Chrome and navigate to chrome://extensions/.
     - Enable Developer mode by toggling the switch in the top right corner.
     - Click on "Load unpacked" and select the extracted folder containing the extension's code (the folder where app.js resides).
+    - A welcome page will automatically open to guide you through the features.
 
 ## Using Zhuzh
 - **Wallpapers**: Zhuzh sets a random wallpaper on load. Use arrow buttons to navigate through wallpapers

@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.4.6] - 2025-08-17
+
+### Added
+- **Welcome Page**: Automatic welcome page opens on first installation
+- **Installation Guide**: Comprehensive feature overview for new users
+- **Background Service Worker**: Handles installation events and user onboarding
+- **UTF-8 Encoding**: Proper emoji display in welcome page
+
+### Improved
+- **User Onboarding**: New users get guided introduction to all features
+- **First-Time Experience**: Professional welcome screen with feature highlights
+- **Extension Lifecycle**: Better handling of installation and setup events
+
+---
+
 ## [0.4.5] - 2025-08-12
 
 ### Added
