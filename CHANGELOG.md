@@ -1,5 +1,31 @@
 # Changelog
 
+## [0.5.0] - 2025-08-29
+
+### Added - Major Update
+- **Currency Calculator**: Real-time currency converter with custom amount input (e.g., 1 million Naira to Cedis)
+- **Pexels Integration**: Access thousands of high-quality wallpapers from Pexels API
+- **Unsplash Integration**: Browse curated wallpapers from Unsplash with multiple categories
+- **Interactive Image Browser**: Grid view with download functionality for external wallpapers
+- **Advanced Currency Tools**: Swap currencies, format large numbers, and calculate any amount
+- **Category Filtering**: Space, rockets, astronomy, galaxy, nature, landscape, and abstract wallpapers
+- **Dual Currency Systems**: Both quick converter (1:1 rates) and advanced calculator (custom amounts)
+
+### Enhanced
+- **Wallpaper Sources**: Now supports local SpaceX collection + Pexels + Unsplash APIs
+- **User Experience**: Toggle buttons for calculator and image browser in main controls
+- **Currency Features**: Professional number formatting with comma separators
+- **Image Quality**: High-resolution wallpapers with thumbnail previews
+- **Download Options**: Direct download capability for external wallpapers
+
+### Technical
+- **API Integration**: Pexels and Unsplash REST API implementations
+- **Component Architecture**: Modular currency calculator and image provider components
+- **State Management**: Enhanced state handling for multiple overlay components
+- **Performance**: Optimized image loading and caching
+
+---
+
 ## [0.4.6] - 2025-08-17
 
 ### Added

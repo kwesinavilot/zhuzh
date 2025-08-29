@@ -8,6 +8,8 @@ import SettingsPanel from "@/sections/SettingsPanel";
 import TimeWidget from "@/sections/TimeWidget";
 import CustomShortcuts from "@/sections/CustomShortcuts";
 import CurrencyConverter from "@/sections/CurrencyConverter";
+import CurrencyCalculator from "@/sections/CurrencyCalculator";
+import ImageProvider from "@/sections/ImageProvider";
 import { isExtensionContext } from './lib/essentials';
 import {
   Tooltip,
@@ -47,6 +49,8 @@ function App() {
   const [maxQuickLinks, setMaxQuickLinks] = useState(5);
   const [baseCurrency, setBaseCurrency] = useState('GHS');
   const [targetCurrencies, setTargetCurrencies] = useState(['USD', 'EUR', 'GBP', 'JPY']);
+  const [showCalculator, setShowCalculator] = useState(false);
+  const [showImageProvider, setShowImageProvider] = useState(false);
   const videoRef = useRef(null);
 
   const readWallpapersFromDirectory = (rootDir, folderName) => {
@@ -256,6 +260,30 @@ function App() {
             </div>
           )}
 
+          {/* Currency Calculator */}
+          {showCalculator && (
+            <div className="absolute bottom-4 right-4">
+              <CurrencyCalculator theme={theme} />
+            </div>
+          )}
+
+          {/* Image Provider */}
+          {showImageProvider && (
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <ImageProvider 
+                theme={theme} 
+                onImageSelect={(imageUrl) => {
+                  setWallpaper(`url(${imageUrl})`);
+                  if (videoRef.current) {
+                    videoRef.current.pause();
+                    videoRef.current.style.display = 'none';
+                  }
+                  setShowImageProvider(false);
+                }}
+              />
+            </div>
+          )}
+
           <div className="content">
             <div className="space-y-4">
               {/* Time Widget */}
@@ -352,6 +380,40 @@ function App() {
 
               <TooltipContent>
                 <p>Go to the next wallpaper</p>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setShowCalculator(!showCalculator)}
+                  className="backdrop-blur-sm bg-white/20 border-0 disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-ring font-medium h-10 hover: hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center ring-offset-background rounded-md text-black text-sm text-white transition-colors w-10 whitespace-nowrap"
+                >
+                  💱
+                </Button>
+              </TooltipTrigger>
+
+              <TooltipContent>
+                <p>Currency Calculator</p>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setShowImageProvider(!showImageProvider)}
+                  className="backdrop-blur-sm bg-white/20 border-0 disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-ring font-medium h-10 hover: hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center ring-offset-background rounded-md text-black text-sm text-white transition-colors w-10 whitespace-nowrap"
+                >
+                  🖼️
+                </Button>
+              </TooltipTrigger>
+
+              <TooltipContent>
+                <p>More Wallpapers</p>
               </TooltipContent>
             </Tooltip>
           </div>
