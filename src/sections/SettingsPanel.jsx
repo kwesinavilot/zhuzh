@@ -1,4 +1,4 @@
-import { X, Sun, Moon, Clock, Calendar, ToggleLeft, ToggleRight, DollarSign, Link, Folder } from 'lucide-react';
+import { X, Sun, Moon, Clock, Calendar, ToggleLeft, ToggleRight, DollarSign, Link, Folder, Coffee } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
@@ -360,6 +360,27 @@ export default function SettingsPanel({
                       💡 Downloads go to: Downloads/Zhuzh-Wallpapers/
                     </div>
                   )}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-sm font-medium mb-3 flex items-center">
+                  <Coffee className="h-4 w-4 mr-2" />
+                  Support Zhuzh
+                </h3>
+                <div className="space-y-3 pl-6 border-l-2 border-gray-200">
+                  <div className="text-xs text-gray-600 mb-2">
+                    Enjoying Zhuzh? Support development with a coffee!
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => window.open('https://buymeacoffee.com/kwesinavilot', '_blank')}
+                    className="w-full flex items-center justify-center space-x-2 hover:bg-orange-50 hover:border-orange-300"
+                  >
+                    <span>☕</span>
+                    <span>Buy Me a Coffee</span>
+                  </Button>
                 </div>
               </div>
             </div>

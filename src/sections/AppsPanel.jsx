@@ -22,6 +22,14 @@ const apps = [
     description: 'Focus timer that follows you everywhere',
     icon: Timer,
     emoji: '🍅'
+  },
+  {
+    id: 'support',
+    name: 'Support Zhuzh',
+    description: 'Buy me a coffee to keep improving',
+    emoji: '☕',
+    isExternal: true,
+    url: 'https://buymeacoffee.com/kwesinavilot'
   }
 ];
 
@@ -39,7 +47,7 @@ export default function AppsPanel({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-black/50" onClick={() => setShowApps(false)} />
-      <div className={`${bgColor} rounded-lg shadow-xl p-6 w-96 relative`}>
+      <div className={`${bgColor} rounded-lg shadow-xl p-6 relative`}>
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center">
             <Grid3X3 className={`h-5 w-5 mr-2 ${textColor}`} />
@@ -57,12 +65,16 @@ export default function AppsPanel({
               variant="outline"
               className={`h-24 flex flex-col items-center justify-center space-y-2 hover:bg-gray-50 ${textColor}`}
               onClick={() => {
-                onAppSelect(app.id);
+                if (app.isExternal) {
+                  window.open(app.url, '_blank');
+                } else {
+                  onAppSelect(app.id);
+                }
                 setShowApps(false);
               }}
             >
               <span className="text-2xl">{app.emoji}</span>
-              <div className="text-center">
+              <div className="text-center w-full">
                 <div className="text-sm font-medium line-clamp-1">{app.name}</div>
                 <div className="text-xs opacity-75 line-clamp-2">{app.description}</div>
               </div>

@@ -1,4 +1,4 @@
-# Zhuzh (0.6.0)
+# Zhuzh (0.6.1)
 Zhuzh is a comprehensive browser extension that transforms your new tab into a beautiful, productive workspace featuring SpaceX wallpapers, productivity tools, and customizable widgets.
 
 ## ✨ Core Features
@@ -245,6 +245,19 @@ zhuzh/
 3. Assets copied to dist folder
 4. Manifest and service worker included
 5. Ready for Chrome extension loading
+
+## ☕ Support Zhuzh
+
+Enjoy using Zhuzh? Support its development and keep it free!
+
+<a href="https://buymeacoffee.com/kwesinavilot" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
+
+Your support helps:
+- 🚀 **Continuous Development** - New features and improvements
+- 🐛 **Bug Fixes** - Quick resolution of issues
+- 🎨 **UI/UX Enhancements** - Better user experience
+- 📱 **Cross-Platform Support** - Firefox and other browsers
+- 🌟 **Feature Requests** - Community-driven development
 
 ## 🤝 Contributing
 

@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.6.1] - 2025-08-29
+
+### Added
+- **Buy Me a Coffee Integration**: Support links added across multiple locations
+- **Apps Panel Support**: Coffee emoji tile for easy donation access
+- **Settings Panel Support**: Dedicated support section with coffee icon
+- **Welcome Page Support**: Prominent support section with official button
+- **README Documentation**: Support section with contribution benefits
+
+### Enhanced
+- **User Support**: Multiple touchpoints for users to support development
+- **Documentation**: Comprehensive support information in README
+- **Monetization Strategy**: Non-intrusive donation system implementation
+
+---
+
 ## [0.6.0] - 2025-08-29
 
 ### Added - Major Update
