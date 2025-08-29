@@ -3,7 +3,7 @@
     "name": "Zhuzh",
     "author": "Andrews Kwesi Ankomahene",
     "short_name": "Zhuzh",
-    "version": "0.5.1",
+    "version": "0.5.2",
     "description": "Zhuzh refreshes your browser with inspiring wallpapers of SpaceX and provides a search bar, clock, date, and currency converter.",
     "permissions": [
         "topSites",

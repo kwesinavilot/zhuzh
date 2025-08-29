@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.5.2] - 2025-08-29
+
+### Added
+- **Apps Panel**: Centralized micro-apps launcher with grid interface
+- **Modal System**: Centered white background modals for better UX
+- **ScrollArea Integration**: Improved scrolling in image browser
+
+### Enhanced
+- **UI Organization**: Apps button in bottom-right, cleaner main controls
+- **Modal Design**: Consistent white backgrounds with backdrop blur
+- **Image Browser**: 4-column grid with larger thumbnails and ScrollArea
+- **Currency Calculator**: Centered modal with close button and clean styling
+- **User Experience**: Organized app access through dedicated apps panel
+
+---
+
 ## [0.5.1] - 2025-08-29
 
 ### Added

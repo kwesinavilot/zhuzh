@@ -1,16 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
-import { CircleArrowRight, CircleArrowLeft, Search, Heart, Settings } from 'lucide-react';
+import { CircleArrowRight, CircleArrowLeft, Search, Heart, Settings, Grid3X3 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import Recents from "@/sections/Recents";
 import SettingsPanel from "@/sections/SettingsPanel";
 import TimeWidget from "@/sections/TimeWidget";
 import CustomShortcuts from "@/sections/CustomShortcuts";
 import CurrencyConverter from "@/sections/CurrencyConverter";
 import CurrencyCalculator from "@/sections/CurrencyCalculator";
 import ImageProvider from "@/sections/ImageProvider";
-import WallpaperManager from "@/sections/WallpaperManager";
+import AppsPanel from "@/sections/AppsPanel";
 import { isExtensionContext } from './lib/essentials';
 import {
   Tooltip,
@@ -52,6 +50,7 @@ function App() {
   const [targetCurrencies, setTargetCurrencies] = useState(['USD', 'EUR', 'GBP', 'JPY']);
   const [showCalculator, setShowCalculator] = useState(false);
   const [showImageProvider, setShowImageProvider] = useState(false);
+  const [showApps, setShowApps] = useState(false);
 
   const [wallpaperSource, setWallpaperSource] = useState('builtin');
   const [customWallpapers, setCustomWallpapers] = useState([]);
@@ -77,11 +76,11 @@ function App() {
   const setInitialWallpaper = () => {
     const activeWallpapers = getWallpapersBySource();
     if (activeWallpapers.length === 0) return;
-    
+
     const randomIndex = Math.floor(Math.random() * activeWallpapers.length);
     const wallpaperFile = activeWallpapers[randomIndex];
     const originalIndex = wallpapers.indexOf(wallpaperFile);
-    
+
     setCurrentIndex(originalIndex >= 0 ? originalIndex : 0);
     updateWallpaper(originalIndex >= 0 ? originalIndex : 0);
   };
@@ -126,12 +125,12 @@ function App() {
 
   const loadCustomWallpapers = async () => {
     if (!chrome?.downloads) return;
-    
+
     try {
       const downloads = await chrome.downloads.search({
         filenameRegex: 'Zhuzh-Wallpapers/.*\\.(jpg|jpeg|png|webp)$'
       });
-      
+
       const wallpapers = downloads
         .filter(item => item.state === 'complete')
         .map(item => ({
@@ -139,7 +138,7 @@ function App() {
           filename: item.filename.split('/').pop(),
           url: `file://${item.filename}`
         }));
-      
+
       setCustomWallpapers(wallpapers);
     } catch (error) {
       console.error('Error loading custom wallpapers:', error);
@@ -297,13 +296,23 @@ function App() {
         ></video>
 
         <div className="top-layer" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 10 }}>
-          {/* Settings Button */}
-          <div className="absolute top-4 right-4">
-            <Button 
-            variant="outline" 
-            size="icon" 
-            onClick={() => setShowSettings(true)}
-            className="backdrop-blur-sm bg-white/20 border-0 disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-ring font-medium h-10 hover: hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center ring-offset-background rounded-md text-black text-sm text-white transition-colors"
+          <div className="absolute top-4 right-4 space-x-2 flex">
+            {/* Apps Button */}
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => setShowApps(true)}
+              className="backdrop-blur-sm bg-white/20 border-0 disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-ring font-medium h-10 hover: hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center ring-offset-background rounded-md text-black text-sm text-white transition-colors"
+            >
+              <Grid3X3 className="h-5 w-5" />
+            </Button>
+
+            {/* Settings Button */}
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => setShowSettings(true)}
+              className="backdrop-blur-sm bg-white/20 border-0 disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-ring font-medium h-10 hover: hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center ring-offset-background rounded-md text-black text-sm text-white transition-colors"
             >
               <Settings className="h-5 w-5" />
             </Button>
@@ -322,26 +331,26 @@ function App() {
 
           {/* Currency Calculator */}
           {showCalculator && (
-            <div className="absolute bottom-4 right-4">
-              <CurrencyCalculator theme={theme} />
-            </div>
+            <CurrencyCalculator 
+              theme={theme} 
+              onClose={() => setShowCalculator(false)}
+            />
           )}
 
           {/* Image Provider */}
           {showImageProvider && (
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-              <ImageProvider 
-                theme={theme} 
-                onImageSelect={(imageUrl) => {
-                  setWallpaper(`url(${imageUrl})`);
-                  if (videoRef.current) {
-                    videoRef.current.pause();
-                    videoRef.current.style.display = 'none';
-                  }
-                  setShowImageProvider(false);
-                }}
-              />
-            </div>
+            <ImageProvider
+              theme={theme}
+              onImageSelect={(imageUrl) => {
+                setWallpaper(`url(${imageUrl})`);
+                if (videoRef.current) {
+                  videoRef.current.pause();
+                  videoRef.current.style.display = 'none';
+                }
+                setShowImageProvider(false);
+              }}
+              onClose={() => setShowImageProvider(false)}
+            />
           )}
 
 
@@ -444,44 +453,21 @@ function App() {
                 <p>Go to the next wallpaper</p>
               </TooltipContent>
             </Tooltip>
-
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => setShowCalculator(!showCalculator)}
-                  className="backdrop-blur-sm bg-white/20 border-0 disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-ring font-medium h-10 hover: hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center ring-offset-background rounded-md text-black text-sm text-white transition-colors w-10 whitespace-nowrap"
-                >
-                  💱
-                </Button>
-              </TooltipTrigger>
-
-              <TooltipContent>
-                <p>Currency Calculator</p>
-              </TooltipContent>
-            </Tooltip>
-
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => setShowImageProvider(!showImageProvider)}
-                  className="backdrop-blur-sm bg-white/20 border-0 disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-ring font-medium h-10 hover: hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center ring-offset-background rounded-md text-black text-sm text-white transition-colors w-10 whitespace-nowrap"
-                >
-                  🖼️
-                </Button>
-              </TooltipTrigger>
-
-              <TooltipContent>
-                <p>More Wallpapers</p>
-              </TooltipContent>
-            </Tooltip>
-
-
           </div>
         </div>
+
+        <AppsPanel
+          showApps={showApps}
+          setShowApps={setShowApps}
+          onAppSelect={(appId) => {
+            if (appId === 'currency-calculator') {
+              setShowCalculator(true);
+            } else if (appId === 'wallpaper-browser') {
+              setShowImageProvider(true);
+            }
+          }}
+          theme={theme}
+        />
 
         <SettingsPanel
           showSettings={showSettings}
