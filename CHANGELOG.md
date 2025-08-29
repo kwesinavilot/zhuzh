@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.6.2] - 2025-08-29
+
+### Enhanced
+- **Clickable Floating Timer**: Click floating timer to open focused modal with full controls
+- **Customizable Timer Durations**: Focus time (15-60 mins) and break time (5-30 mins) dropdowns
+- **Smart Settings Display**: Settings auto-show for new users, hide during active sessions
+- **Improved Modal Interface**: Clean modal with progress circle, play/pause, and reset buttons
+- **Background Integration**: Enhanced message handling for toggle/reset from floating timer
+
+### User Experience
+- **Intuitive First Use**: Settings visible by default for timer customization
+- **Click vs Drag Detection**: Click opens modal, drag moves timer position
+- **Real-Time Sync**: Modal updates automatically when timer state changes
+- **Persistent Preferences**: Custom timer durations saved across browser sessions
+
+---
+
 ## [0.6.1] - 2025-08-29
 
 ### Added

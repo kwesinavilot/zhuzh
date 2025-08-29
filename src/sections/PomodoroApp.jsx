@@ -1,15 +1,18 @@
 import { useState, useEffect } from 'react';
-import { Timer, Play, Pause, RotateCcw, X } from 'lucide-react';
+import { Timer, Play, Pause, RotateCcw, X, Settings } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
-const WORK_TIME = 25 * 60; // 25 minutes
-const BREAK_TIME = 5 * 60; // 5 minutes
+const DEFAULT_WORK_TIME = 25 * 60; // 25 minutes
+const DEFAULT_BREAK_TIME = 5 * 60; // 5 minutes
 
 export default function PomodoroApp({ theme = 'light', onClose }) {
-  const [timeLeft, setTimeLeft] = useState(WORK_TIME);
+  const [workTime, setWorkTime] = useState(DEFAULT_WORK_TIME);
+  const [breakTime, setBreakTime] = useState(DEFAULT_BREAK_TIME);
+  const [timeLeft, setTimeLeft] = useState(DEFAULT_WORK_TIME);
   const [isRunning, setIsRunning] = useState(false);
   const [isBreak, setIsBreak] = useState(false);
   const [sessions, setSessions] = useState(0);
+  const [showSettings, setShowSettings] = useState(false);
 
   const bgColor = 'bg-white';
   const textColor = 'text-gray-900';
@@ -20,9 +23,14 @@ export default function PomodoroApp({ theme = 'light', onClose }) {
   }, []);
 
   useEffect(() => {
+    // Auto-show settings when no session is ongoing
+    setShowSettings(!isRunning && sessions === 0);
+  }, [isRunning, sessions]);
+
+  useEffect(() => {
     // Save state to storage whenever it changes
     savePomodoroState();
-  }, [timeLeft, isRunning, isBreak, sessions]);
+  }, [timeLeft, isRunning, isBreak, sessions, workTime, breakTime]);
 
   useEffect(() => {
     let interval;
@@ -32,7 +40,7 @@ export default function PomodoroApp({ theme = 'light', onClose }) {
           if (prev <= 1) {
             // Timer finished
             handleTimerComplete();
-            return isBreak ? WORK_TIME : BREAK_TIME;
+            return isBreak ? workTime : breakTime;
           }
           return prev - 1;
         });
@@ -43,10 +51,15 @@ export default function PomodoroApp({ theme = 'light', onClose }) {
 
   const loadPomodoroState = async () => {
     if (chrome?.storage) {
-      const result = await chrome.storage.local.get(['pomodoroState']);
+      const result = await chrome.storage.local.get(['pomodoroState', 'pomodoroSettings']);
+      if (result.pomodoroSettings) {
+        const settings = result.pomodoroSettings;
+        setWorkTime(settings.workTime || DEFAULT_WORK_TIME);
+        setBreakTime(settings.breakTime || DEFAULT_BREAK_TIME);
+      }
       if (result.pomodoroState) {
         const state = result.pomodoroState;
-        setTimeLeft(state.timeLeft || WORK_TIME);
+        setTimeLeft(state.timeLeft || workTime);
         setIsRunning(state.isRunning || false);
         setIsBreak(state.isBreak || false);
         setSessions(state.sessions || 0);
@@ -63,6 +76,10 @@ export default function PomodoroApp({ theme = 'light', onClose }) {
           isBreak,
           sessions,
           lastUpdate: Date.now()
+        },
+        pomodoroSettings: {
+          workTime,
+          breakTime
         }
       });
     }
@@ -100,7 +117,16 @@ export default function PomodoroApp({ theme = 'light', onClose }) {
 
   const resetTimer = () => {
     setIsRunning(false);
-    setTimeLeft(isBreak ? BREAK_TIME : WORK_TIME);
+    setTimeLeft(isBreak ? breakTime : workTime);
+  };
+
+  const handleSettingsChange = (newWorkTime, newBreakTime) => {
+    setWorkTime(newWorkTime);
+    setBreakTime(newBreakTime);
+    if (!isRunning) {
+      setTimeLeft(isBreak ? newBreakTime : newWorkTime);
+    }
+    setShowSettings(false);
   };
 
   const formatTime = (seconds) => {
@@ -109,7 +135,7 @@ export default function PomodoroApp({ theme = 'light', onClose }) {
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const progress = ((isBreak ? BREAK_TIME : WORK_TIME) - timeLeft) / (isBreak ? BREAK_TIME : WORK_TIME) * 100;
+  const progress = ((isBreak ? breakTime : workTime) - timeLeft) / (isBreak ? breakTime : workTime) * 100;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
@@ -120,14 +146,26 @@ export default function PomodoroApp({ theme = 'light', onClose }) {
             <Timer className={`h-4 w-4 mr-2 ${textColor}`} />
             <h3 className={`text-sm font-medium ${textColor}`}>Pomodoro Timer</h3>
           </div>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => onClose?.()}
-            className="h-6 w-6 p-0 hover:bg-gray-100"
-          >
-            <X className={`h-3 w-3 ${textColor}`} />
-          </Button>
+          <div className="flex items-center space-x-1">
+            {(isRunning || sessions > 0) && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowSettings(!showSettings)}
+                className="h-6 w-6 p-0 hover:bg-gray-100"
+              >
+                <Settings className={`h-3 w-3 ${textColor}`} />
+              </Button>
+            )}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => onClose?.()}
+              className="h-6 w-6 p-0 hover:bg-gray-100"
+            >
+              <X className={`h-3 w-3 ${textColor}`} />
+            </Button>
+          </div>
         </div>
 
         <div className="text-center mb-6">
@@ -188,6 +226,37 @@ export default function PomodoroApp({ theme = 'light', onClose }) {
             Reset
           </Button>
         </div>
+
+        {(showSettings || (!isRunning && sessions === 0)) && (
+          <div className="mt-4 pt-4 border-t border-gray-200">
+            <div className="space-y-3">
+              <div>
+                <label className={`text-xs font-medium ${textColor} block mb-1`}>Focus Time</label>
+                <select 
+                  className="w-full p-2 border rounded text-sm"
+                  value={workTime / 60}
+                  onChange={(e) => handleSettingsChange(parseInt(e.target.value) * 60, breakTime)}
+                >
+                  {[15, 20, 25, 30, 35, 40, 45, 50, 55, 60].map(mins => (
+                    <option key={mins} value={mins}>{mins} minutes</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className={`text-xs font-medium ${textColor} block mb-1`}>Break Time</label>
+                <select 
+                  className="w-full p-2 border rounded text-sm"
+                  value={breakTime / 60}
+                  onChange={(e) => handleSettingsChange(workTime, parseInt(e.target.value) * 60)}
+                >
+                  {[5, 10, 15, 20, 25, 30].map(mins => (
+                    <option key={mins} value={mins}>{mins} minutes</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className={`text-xs ${textColor} opacity-50 mt-4 text-center`}>
           Timer persists across all browser tabs

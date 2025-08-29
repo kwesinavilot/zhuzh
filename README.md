@@ -1,4 +1,4 @@
-# Zhuzh (0.6.1)
+# Zhuzh (0.6.2)
 Zhuzh is a comprehensive browser extension that transforms your new tab into a beautiful, productive workspace featuring SpaceX wallpapers, productivity tools, and customizable widgets.
 
 ## ✨ Core Features

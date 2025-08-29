@@ -8,9 +8,13 @@ chrome.runtime.onInstalled.addListener((details) => {
 let pomodoroInterval = null;
 
 // Handle messages from content script
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
   if (message.action === 'acknowledgePomodoroComplete') {
     handlePomodoroAcknowledge();
+  } else if (message.action === 'togglePomodoro') {
+    await handleTogglePomodoro();
+  } else if (message.action === 'resetPomodoro') {
+    await handleResetPomodoro();
   }
 });
 
@@ -38,9 +42,13 @@ function startBackgroundTimer() {
       
       if (newTimeLeft <= 0) {
         // Timer complete
+        // Get settings for proper timer values
+        const settingsResult = await chrome.storage.local.get(['pomodoroSettings']);
+        const settings = settingsResult.pomodoroSettings || { workTime: 25 * 60, breakTime: 5 * 60 };
+        
         const newState = {
           ...state,
-          timeLeft: state.isBreak ? 25 * 60 : 5 * 60,
+          timeLeft: state.isBreak ? settings.workTime : settings.breakTime,
           isRunning: false,
           isBreak: !state.isBreak,
           sessions: state.isBreak ? state.sessions : state.sessions + 1
@@ -77,4 +85,32 @@ function stopBackgroundTimer() {
 function handlePomodoroAcknowledge() {
   // User acknowledged timer completion - can add logic here
   console.log('Pomodoro acknowledged');
+}
+
+async function handleTogglePomodoro() {
+  const result = await chrome.storage.local.get(['pomodoroState', 'pomodoroSettings']);
+  const state = result.pomodoroState || {};
+  const settings = result.pomodoroSettings || { workTime: 25 * 60, breakTime: 5 * 60 };
+  
+  const newState = {
+    ...state,
+    isRunning: !state.isRunning,
+    timeLeft: state.timeLeft || (state.isBreak ? settings.breakTime : settings.workTime)
+  };
+  
+  await chrome.storage.local.set({ pomodoroState: newState });
+}
+
+async function handleResetPomodoro() {
+  const result = await chrome.storage.local.get(['pomodoroState', 'pomodoroSettings']);
+  const state = result.pomodoroState || {};
+  const settings = result.pomodoroSettings || { workTime: 25 * 60, breakTime: 5 * 60 };
+  
+  const newState = {
+    ...state,
+    isRunning: false,
+    timeLeft: state.isBreak ? settings.breakTime : settings.workTime
+  };
+  
+  await chrome.storage.local.set({ pomodoroState: newState });
 }
