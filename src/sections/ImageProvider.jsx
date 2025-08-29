@@ -37,7 +37,7 @@ export default function ImageProvider({ theme = 'light', onImageSelect, onClose 
       let response;
 
       if (provider === 'pexels') {
-        response = await fetch(`https://api.pexels.com/v1/search?query=${category}&per_page=12&orientation=landscape`, {
+        response = await fetch(`https://api.pexels.com/v1/search?query=${category}&per_page=25&orientation=landscape`, {
           headers: {
             'Authorization': PEXELS_API_KEY
           }
@@ -51,7 +51,7 @@ export default function ImageProvider({ theme = 'light', onImageSelect, onClose 
           source: 'pexels'
         })) || []);
       } else {
-        response = await fetch(`https://api.unsplash.com/search/photos?query=${category}&per_page=12&orientation=landscape&client_id=${UNSPLASH_ACCESS_KEY}`);
+        response = await fetch(`https://api.unsplash.com/search/photos?query=${category}&per_page=25&orientation=landscape&client_id=${UNSPLASH_ACCESS_KEY}`);
         const data = await response.json();
         setImages(data.results?.map(photo => ({
           id: photo.id,

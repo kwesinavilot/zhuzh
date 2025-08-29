@@ -1,50 +1,271 @@
-# Zhuzh (0.4.6)
-Zhuzh is a lightweight browser extension that displays beautiful SpaceX wallpapers as your background and provides a search bar for quick searches. It also showcases your top visited websites for easy access.
+# Zhuzh (0.5.3)
+Zhuzh is a comprehensive browser extension that transforms your new tab into a beautiful, productive workspace featuring SpaceX wallpapers, productivity tools, and customizable widgets.
 
-## Features
-- **Dynamic Wallpapers**: Enjoy a collection of stunning SpaceX wallpapers that change automatically or can be cycled through manually
-- **Favorites System**: Save and cycle through your favorite wallpapers with the heart button
-- **Smart Search**: Uses Chrome's Search API to respect your default search engine settings
-- **Custom Quick Links**: Add, edit, or remove quick links with site logos and top visited sites integration
-- **Currency Converter**: Real-time exchange rates with customizable base currency and multiple target currencies
-- **Clock & Date Widget**: Customizable time and date display with multiple styles
-- **Settings Panel**: Comprehensive customization with theme, layout, and time format options
-- **Welcome Page**: Guided onboarding experience for new users with feature overview
+## ✨ Core Features
+
+### 🖼️ **Wallpaper System**
+- **Dynamic SpaceX Collection**: Curated high-quality SpaceX wallpapers and videos
+- **Favorites System**: Save and cycle through your favorite wallpapers with heart button
+- **Custom Wallpaper Sources**: Built-in SpaceX, Custom folder, Online APIs (Pexels/Unsplash), or Mixed
+- **Auto-Download Organization**: Downloaded wallpapers saved to `Downloads/Zhuzh-Wallpapers/`
+- **Wallpaper Navigation**: Arrow buttons to browse through collections
+
+### 🔍 **Smart Search**
+- **Chrome Search API Integration**: Respects your browser's default search engine
+- **Clean Interface**: Centered search bar with intuitive design
+- **Instant Results**: Press Enter to search with your preferred engine
+
+### 🔗 **Quick Links System**
+- **Hybrid Approach**: Combines Chrome's top visited sites with custom shortcuts
+- **Customizable Count**: Choose 5-10 quick links from settings
+- **Site Logos**: Automatic favicon detection with fallback to first letter
+- **Easy Management**: Add, edit, or remove links with modal interface
+
+### 💰 **Currency Tools**
+- **Real-Time Converter**: Live exchange rates for 12+ currencies in bottom-left
+- **Advanced Calculator**: Custom amount converter (e.g., 1M Naira → Cedis) via Apps panel
+- **Customizable Base**: Choose from USD, EUR, GBP, JPY, GHS, NGN, and more
+- **Multiple Targets**: Select up to 4 target currencies for quick conversion
+
+### 🕐 **Time & Date Widgets**
+- **Multiple Clock Styles**: Digital, analog, and minimal variants
+- **Date Display Options**: Full, compact, minimal, and card styles
+- **Layout Control**: Vertical or horizontal arrangements
+- **Timezone Support**: Local time plus UTC, EST, PST, GMT, CET, JST
+- **Format Options**: 12-hour or 24-hour time display
+
+### 📱 **Apps System**
+- **Micro-Apps Panel**: Centralized launcher for advanced tools
+- **Currency Calculator**: Professional converter with custom amounts
+- **Wallpaper Browser**: Browse thousands of Pexels/Unsplash images
+- **Modal Interface**: Clean, centered modals with white backgrounds
+
+### ⚙️ **Comprehensive Settings**
+- **Theme Control**: Light/Dark mode switching
+- **Widget Customization**: Toggle and style all components
+- **Wallpaper Management**: Source selection and folder organization
+- **Currency Preferences**: Base currency and target selection
+- **Layout Options**: Customize time widget arrangements
+- **Persistent Storage**: All settings saved locally
+
+### 🎯 **User Experience**
+- **Welcome Page**: Guided onboarding for new users
 - **Tooltips**: Helpful hints for all controls
+- **Responsive Design**: Adapts to different screen sizes
+- **Smooth Animations**: Polished transitions and interactions
+- **Keyboard Shortcuts**: Efficient navigation options
 
-## Built With
-- **React** - Frontend framework
-- **Shadcn UI Components** - UI component library
-- **Tailwind CSS** - Styling framework
-- **Lucide React** - Icon library
-- **Chrome Extensions API** - Browser integration
-- **SpaceX Twitter Images** - Wallpaper source (Unofficial)
+## 🛠️ Technical Stack
 
-## SpaceX Wallpaper Source:
-The beautiful wallpapers displayed in Zhuzh are sourced from the official SpaceX Twitter page (https://twitter.com/SpaceX/media).
+### **Frontend**
+- **React 18** - Modern frontend framework with hooks
+- **Vite** - Fast build tool and development server
+- **JavaScript/JSX** - Component-based architecture
 
-## Installation (Unpacked Extension)
-**Important Note: This extension is currently not available on the Chrome Web Store. You can install it by loading the unpacked extension folder in Chrome.**
+### **UI & Styling**
+- **Shadcn UI** - High-quality component library
+- **Tailwind CSS** - Utility-first CSS framework
+- **Radix UI** - Accessible component primitives
+- **Lucide React** - Beautiful icon library
+- **Custom CSS** - Specialized animations and layouts
 
-1. Download the source code: Clone or download the source code for this project.
-2. Extract the folder: Extract the downloaded ZIP file to a convenient location on your computer.
-3. Load the unpacked extension in Chrome:
-    - Open Chrome and navigate to chrome://extensions/.
-    - Enable Developer mode by toggling the switch in the top right corner.
-    - Click on "Load unpacked" and select the extracted folder containing the extension's code (the folder where app.js resides).
-    - A welcome page will automatically open to guide you through the features.
+### **Browser Integration**
+- **Chrome Extensions API** - Core browser functionality
+- **Chrome Search API** - Default search engine integration
+- **Chrome TopSites API** - Most visited sites access
+- **Chrome Downloads API** - File management and organization
+- **Chrome Favicon API** - Site icon retrieval
 
-## Using Zhuzh
-- **Wallpapers**: Zhuzh sets a random wallpaper on load. Use arrow buttons to navigate through wallpapers
-- **Favorites**: Click the heart button to save wallpapers as favorites. Toggle "Favs" to view only favorites
-- **Search**: Type your query and press Enter - uses your browser's default search engine
-- **Clock & Date**: Customizable widgets in top-left corner with multiple display styles
-- **Settings**: Click the gear icon (top-right) to access theme, layout, time format, and timezone options
-- **Quick Links**: Up to 10 customizable quick access sites with logos, combining top visited sites and custom additions
-- **Currency Converter**: Real-time exchange rates displayed in bottom-left corner with refresh functionality
+### **External APIs**
+- **Open Exchange Rates** - Real-time currency data
+- **Pexels API** - High-quality stock photography
+- **Unsplash API** - Curated wallpaper collection
+- **SpaceX Media** - Official SpaceX imagery (unofficial source)
 
-## Contributing
-I appreciate any contributions to improve Zhuzh. Feel free to fork the repository and submit pull requests.
+### **Data & Storage**
+- **localStorage** - Settings and preferences persistence
+- **Chrome Storage API** - Extension-specific data
+- **File System Integration** - Custom wallpaper management
 
-## License
-This project is licensed under the MIT License.
+## 🚀 Wallpaper Sources
+
+### **Built-in Collection**
+Curated SpaceX wallpapers and videos sourced from official SpaceX media channels, including high-resolution images from launches, spacecraft, and space exploration missions.
+
+### **Online APIs**
+- **Pexels**: Professional stock photography with space, rocket, and astronomy categories
+- **Unsplash**: Curated high-quality images from talented photographers worldwide
+- **Categories**: Space, Rockets, Astronomy, Galaxy, Planets, Nature, Landscape, Abstract
+
+### **Custom Folder**
+Personal wallpaper collection automatically organized in `Downloads/Zhuzh-Wallpapers/` with support for JPG, JPEG, PNG, and WebP formats.
+
+## 📦 Installation
+
+### **Development Installation (Unpacked)**
+
+1. **Clone Repository**
+   ```bash
+   git clone https://github.com/kwesinavilot/zhuzh.git
+   cd zhuzh
+   ```
+
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Build Extension**
+   ```bash
+   npm run build
+   ```
+
+4. **Load in Chrome**
+   - Open Chrome and navigate to `chrome://extensions/`
+   - Enable "Developer mode" (toggle in top-right)
+   - Click "Load unpacked" and select the `dist` folder
+   - Welcome page opens automatically with feature guide
+
+### **Development Mode**
+```bash
+npm run dev
+```
+Runs development server for live coding and testing.
+
+### **Production Build**
+```bash
+npm run build
+```
+Creates optimized build in `dist/` folder ready for Chrome Web Store submission.
+
+## 🎮 Usage Guide
+
+### **First Launch**
+- Welcome page opens automatically with feature overview
+- Random SpaceX wallpaper loads as background
+- All widgets and tools are ready to use immediately
+
+### **Navigation Controls**
+- **⬅️ ➡️ Arrow Buttons**: Navigate through wallpaper collection
+- **❤️ Heart Button**: Save current wallpaper to favorites
+- **"Favs" Toggle**: Switch between all wallpapers and favorites only
+- **⚙️ Settings (Top-Right)**: Access all customization options
+- **📱 Apps (Bottom-Right)**: Launch micro-apps panel
+
+### **Search Functionality**
+- Type query in center search bar
+- Press Enter to search with your default search engine
+- Respects Chrome's search engine preferences
+
+### **Wallpaper Management**
+1. **Settings → Wallpaper Sources**: Choose source type
+2. **Built-in**: Use curated SpaceX collection
+3. **Custom**: Use personal wallpapers from Zhuzh folder
+4. **Online**: Browse Pexels/Unsplash via Apps panel
+5. **Mixed**: Combine all sources
+
+### **Currency Tools**
+- **Bottom-Left Converter**: Quick 1:1 exchange rates
+- **Apps → Currency Calculator**: Custom amount conversions
+- **Settings**: Customize base currency and targets
+
+### **Time Widgets**
+- **Top-Left Corner**: Clock and date display
+- **Settings**: Choose styles, formats, timezones, layouts
+- **Toggle Visibility**: Show/hide individual widgets
+
+### **Quick Links**
+- **Auto-Population**: Top visited sites appear automatically
+- **Custom Addition**: Click "+" to add personal shortcuts
+- **Management**: Edit or remove links via modal interface
+- **Settings**: Adjust count (5-10 links)
+
+### **Apps Panel**
+- **Currency Calculator**: Professional converter with swap function
+- **Wallpaper Browser**: Browse thousands of online wallpapers
+- **Download Integration**: Images save to Zhuzh folder automatically
+
+## 🔧 Development
+
+### **Project Structure**
+```
+zhuzh/
+├── public/
+│   ├── backgrounds/          # Built-in wallpaper collection
+│   ├── icons/               # Extension icons and assets
+│   ├── manifest.json        # Chrome extension manifest
+│   ├── background.js        # Service worker for installation
+│   └── welcome.html         # Onboarding page
+├── src/
+│   ├── components/ui/       # Shadcn UI components
+│   ├── sections/           # Feature components
+│   │   ├── AppsPanel.jsx
+│   │   ├── CurrencyConverter.jsx
+│   │   ├── CurrencyCalculator.jsx
+│   │   ├── CustomShortcuts.jsx
+│   │   ├── ImageProvider.jsx
+│   │   ├── SettingsPanel.jsx
+│   │   ├── TimeWidget.jsx
+│   │   └── WallpaperManager.jsx
+│   ├── lib/                # Utilities and helpers
+│   ├── styles/             # CSS and styling
+│   ├── App.jsx             # Main application component
+│   └── main.jsx            # React entry point
+├── dist/                   # Built extension (generated)
+└── package.json           # Dependencies and scripts
+```
+
+### **Key Components**
+- **App.jsx**: Main state management and layout
+- **SettingsPanel.jsx**: Comprehensive settings interface
+- **AppsPanel.jsx**: Micro-apps launcher system
+- **CurrencyConverter.jsx**: Real-time exchange rates widget
+- **ImageProvider.jsx**: Online wallpaper browser
+- **TimeWidget.jsx**: Clock and date display system
+
+### **API Integration**
+- Currency data from Open Exchange Rates API
+- Images from Pexels and Unsplash APIs
+- Chrome extension APIs for browser integration
+- localStorage for settings persistence
+
+### **Build Process**
+1. Vite processes React/JSX components
+2. Tailwind CSS compiles utility classes
+3. Assets copied to dist folder
+4. Manifest and service worker included
+5. Ready for Chrome extension loading
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to:
+- Fork the repository
+- Create feature branches
+- Submit pull requests
+- Report issues and bugs
+- Suggest new features
+
+### **Development Setup**
+1. Fork and clone the repository
+2. Install dependencies: `npm install`
+3. Start development server: `npm run dev`
+4. Make changes and test
+5. Build for production: `npm run build`
+6. Test extension in Chrome
+7. Submit pull request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- **SpaceX** for inspiring imagery and space exploration
+- **Pexels & Unsplash** for high-quality wallpaper APIs
+- **Shadcn UI** for beautiful component library
+- **Open Exchange Rates** for reliable currency data
+- **Chrome Extensions Team** for powerful browser APIs
+
+---
+
+**Made with ❤️ for productivity and space enthusiasts**

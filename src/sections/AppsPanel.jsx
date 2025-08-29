@@ -56,8 +56,8 @@ export default function AppsPanel({
             >
               <span className="text-2xl">{app.emoji}</span>
               <div className="text-center">
-                <div className="text-sm font-medium">{app.name}</div>
-                <div className="text-xs opacity-75">{app.description}</div>
+                <div className="text-sm font-medium line-clamp-1">{app.name}</div>
+                <div className="text-xs opacity-75 line-clamp-2">{app.description}</div>
               </div>
             </Button>
           ))}

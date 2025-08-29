@@ -6,35 +6,55 @@
   <style>
     body { 
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-      max-width: 800px; 
-      margin: 50px auto; 
+      max-width: 900px; 
+      margin: 30px auto; 
       padding: 20px; 
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
       min-height: 100vh;
+      line-height: 1.6;
     }
-    h1 { color: white; text-align: center; font-size: 3rem; margin-bottom: 1rem; }
+    h1 { color: white; text-align: center; font-size: 3rem; margin-bottom: 0.5rem; }
+    .version { text-align: center; font-size: 1rem; opacity: 0.8; margin-bottom: 1rem; }
     .subtitle { text-align: center; font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9; }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; margin-bottom: 2rem; }
     .feature { 
-      margin: 20px 0; 
       padding: 20px; 
       background: rgba(255, 255, 255, 0.1); 
       border-radius: 12px; 
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.2);
     }
-    .feature h3 { margin-top: 0; font-size: 1.3rem; }
+    .feature h3 { margin-top: 0; font-size: 1.2rem; display: flex; align-items: center; gap: 8px; }
+    .feature p { margin-bottom: 0; font-size: 0.95rem; }
+    .new-features { 
+      background: rgba(255, 255, 255, 0.15); 
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      margin-bottom: 2rem;
+      padding: 20px;
+      border-radius: 12px;
+    }
+    .new-features h2 { margin-top: 0; color: #FFD700; }
+    .controls { 
+      background: rgba(255, 255, 255, 0.12); 
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+    }
+    .controls h2 { margin-top: 0; }
+    .control-item { margin: 10px 0; font-size: 0.95rem; }
     .cta { 
       text-align: center; 
-      margin-top: 3rem; 
-      padding: 20px; 
+      margin-top: 2rem; 
+      padding: 25px; 
       background: rgba(255, 255, 255, 0.15); 
       border-radius: 12px; 
-      font-size: 1.1rem; 
+      font-size: 1.2rem; 
       font-weight: 600;
     }
-    .logo { text-align: center; margin-bottom: 2rem; }
+    .logo { text-align: center; margin-bottom: 1rem; }
     .logo img { width: 64px; height: 64px; }
+    .tech-stack { font-size: 0.9rem; text-align: center; opacity: 0.8; margin-top: 2rem; }
   </style>
 </head>
 <body>
@@ -43,40 +63,66 @@
   </div>
   
   <h1>Welcome to Zhuzh! 🚀</h1>
-  <p class="subtitle">Transform your new tab into a beautiful SpaceX-inspired productivity dashboard</p>
+  <div class="version">Version 0.5.3</div>
+  <p class="subtitle">Transform your new tab into a beautiful, productive workspace featuring SpaceX wallpapers, productivity tools, and customizable widgets</p>
   
-  <div class="feature">
-    <h3>🖼️ Dynamic Wallpapers</h3>
-    <p>Navigate through stunning SpaceX wallpapers using arrow buttons. Click the heart to save your favorites and toggle "Favs" to view only your saved wallpapers.</p>
+  <div class="new-features">
+    <h2>✨ What's New in v0.5.3</h2>
+    <div class="control-item">📱 <strong>Apps Panel</strong> - Centralized micro-apps launcher (bottom-right button)</div>
+    <div class="control-item">💱 <strong>Currency Calculator</strong> - Convert custom amounts (e.g., 1M Naira → Cedis)</div>
+    <div class="control-item">🖼️ <strong>Wallpaper Browser</strong> - Browse thousands of Pexels/Unsplash images</div>
+    <div class="control-item">📁 <strong>Custom Wallpapers</strong> - Auto-organized in Downloads/Zhuzh-Wallpapers/</div>
+    <div class="control-item">🎨 <strong>Modal Interface</strong> - Clean, centered white background modals</div>
+  </div>
+
+  <div class="controls">
+    <h2>🎮 Quick Start Guide</h2>
+    <div class="control-item">⬅️ ➡️ <strong>Arrow Buttons</strong> - Navigate through wallpaper collection</div>
+    <div class="control-item">❤️ <strong>Heart Button</strong> - Save current wallpaper to favorites</div>
+    <div class="control-item">📱 <strong>Apps Button</strong> - Launch micro-apps panel (bottom-right)</div>
+    <div class="control-item">⚙️ <strong>Settings Button</strong> - Access all customization options (top-right)</div>
+    <div class="control-item">🔍 <strong>Search Bar</strong> - Type and press Enter to search with your default engine</div>
   </div>
   
-  <div class="feature">
-    <h3>🔍 Smart Search</h3>
-    <p>Type in the search bar and press Enter - respects your browser's default search engine settings for a seamless experience.</p>
-  </div>
-  
-  <div class="feature">
-    <h3>💰 Currency Converter</h3>
-    <p>Real-time exchange rates in the bottom-left corner. Customize your base currency and target currencies from the settings panel.</p>
-  </div>
-  
-  <div class="feature">
-    <h3>🔗 Quick Links</h3>
-    <p>Access your most-visited sites plus custom shortcuts. Add, edit, or remove links with automatic favicon detection.</p>
-  </div>
-  
-  <div class="feature">
-    <h3>🕐 Time & Date Widgets</h3>
-    <p>Customizable clock and date display in the top-left corner with multiple styles, time formats, and timezone options.</p>
-  </div>
-  
-  <div class="feature">
-    <h3>⚙️ Comprehensive Settings</h3>
-    <p>Click the gear icon (top-right) to customize themes, layout, time formats, currency preferences, and much more.</p>
+  <div class="features-grid">
+    <div class="feature">
+      <h3>🖼️ Wallpaper System</h3>
+      <p>Dynamic SpaceX collection, favorites system, custom folder support, and online APIs (Pexels/Unsplash) with auto-download organization.</p>
+    </div>
+    
+    <div class="feature">
+      <h3>💰 Currency Tools</h3>
+      <p>Real-time converter (bottom-left) plus advanced calculator via Apps panel. Support for 12+ currencies with customizable base and targets.</p>
+    </div>
+    
+    <div class="feature">
+      <h3>🔗 Quick Links</h3>
+      <p>Hybrid system combining top visited sites with custom shortcuts. Automatic favicon detection and easy management (5-10 links).</p>
+    </div>
+    
+    <div class="feature">
+      <h3>🕐 Time & Date</h3>
+      <p>Customizable widgets with multiple styles, timezone support, and layout options. Toggle visibility and formats from settings.</p>
+    </div>
+    
+    <div class="feature">
+      <h3>📱 Apps System</h3>
+      <p>Centralized launcher for micro-apps including currency calculator and wallpaper browser with clean modal interfaces.</p>
+    </div>
+    
+    <div class="feature">
+      <h3>⚙️ Settings</h3>
+      <p>Comprehensive customization with theme control, widget toggles, wallpaper sources, currency preferences, and persistent storage.</p>
+    </div>
   </div>
   
   <div class="cta">
-    <strong>Open a new tab to start using Zhuzh!</strong>
+    <strong>🎯 Open a new tab to start using Zhuzh!</strong><br>
+    <small style="opacity: 0.8; font-weight: normal;">All features are ready to use immediately</small>
+  </div>
+
+  <div class="tech-stack">
+    Built with React 18 • Vite • Tailwind CSS • Shadcn UI • Chrome Extensions API
   </div>
 </body>
 </html>
