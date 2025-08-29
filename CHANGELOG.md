@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.5.1] - 2025-08-29
+
+### Added
+- **Wallpaper Management**: Custom folder creation in Downloads/Zhuzh-Wallpapers/
+- **Wallpaper Source Selection**: Built-in SpaceX, Custom folder, Online APIs, or Mixed sources
+- **Auto-Download Organization**: Downloaded wallpapers automatically saved to dedicated folder
+- **Settings Integration**: Wallpaper management moved to settings panel for cleaner UI
+- **Persistent Folder Detection**: Reliable custom folder detection with localStorage tracking
+
+### Enhanced
+- **Downloads API**: Chrome Downloads API integration for folder management
+- **File System**: Automatic wallpaper organization and source switching
+- **User Experience**: Cleaner main UI with wallpaper controls in settings
+
+---
+
 ## [0.5.0] - 2025-08-29
 
 ### Added - Major Update

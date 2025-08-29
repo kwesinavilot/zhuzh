@@ -10,6 +10,7 @@ import CustomShortcuts from "@/sections/CustomShortcuts";
 import CurrencyConverter from "@/sections/CurrencyConverter";
 import CurrencyCalculator from "@/sections/CurrencyCalculator";
 import ImageProvider from "@/sections/ImageProvider";
+import WallpaperManager from "@/sections/WallpaperManager";
 import { isExtensionContext } from './lib/essentials';
 import {
   Tooltip,
@@ -51,6 +52,9 @@ function App() {
   const [targetCurrencies, setTargetCurrencies] = useState(['USD', 'EUR', 'GBP', 'JPY']);
   const [showCalculator, setShowCalculator] = useState(false);
   const [showImageProvider, setShowImageProvider] = useState(false);
+
+  const [wallpaperSource, setWallpaperSource] = useState('builtin');
+  const [customWallpapers, setCustomWallpapers] = useState([]);
   const videoRef = useRef(null);
 
   const readWallpapersFromDirectory = (rootDir, folderName) => {
@@ -71,9 +75,30 @@ function App() {
   };
 
   const setInitialWallpaper = () => {
-    const randomIndex = Math.floor(Math.random() * wallpapers.length);
-    setCurrentIndex(randomIndex);
-    updateWallpaper(randomIndex);
+    const activeWallpapers = getWallpapersBySource();
+    if (activeWallpapers.length === 0) return;
+    
+    const randomIndex = Math.floor(Math.random() * activeWallpapers.length);
+    const wallpaperFile = activeWallpapers[randomIndex];
+    const originalIndex = wallpapers.indexOf(wallpaperFile);
+    
+    setCurrentIndex(originalIndex >= 0 ? originalIndex : 0);
+    updateWallpaper(originalIndex >= 0 ? originalIndex : 0);
+  };
+
+  const getWallpapersBySource = () => {
+    switch (wallpaperSource) {
+      case 'builtin':
+        return wallpapers;
+      case 'custom':
+        return customWallpapers.length > 0 ? customWallpapers.map(w => w.url) : wallpapers;
+      case 'online':
+        return []; // Online wallpapers are handled differently
+      case 'mixed':
+        return [...wallpapers, ...customWallpapers.map(w => w.url)];
+      default:
+        return wallpapers;
+    }
   };
 
   useEffect(() => {
@@ -91,6 +116,35 @@ function App() {
       setInitialWallpaper();
     }
   }, [wallpapers]);
+
+  useEffect(() => {
+    // Load custom wallpapers when source changes to custom or mixed
+    if (wallpaperSource === 'custom' || wallpaperSource === 'mixed') {
+      loadCustomWallpapers();
+    }
+  }, [wallpaperSource]);
+
+  const loadCustomWallpapers = async () => {
+    if (!chrome?.downloads) return;
+    
+    try {
+      const downloads = await chrome.downloads.search({
+        filenameRegex: 'Zhuzh-Wallpapers/.*\\.(jpg|jpeg|png|webp)$'
+      });
+      
+      const wallpapers = downloads
+        .filter(item => item.state === 'complete')
+        .map(item => ({
+          id: item.id,
+          filename: item.filename.split('/').pop(),
+          url: `file://${item.filename}`
+        }));
+      
+      setCustomWallpapers(wallpapers);
+    } catch (error) {
+      console.error('Error loading custom wallpapers:', error);
+    }
+  };
 
   useEffect(() => {
     const savedFavorites = localStorage.getItem('zhuzh-favorites');
@@ -157,6 +211,11 @@ function App() {
     if (savedTargetCurrencies) {
       setTargetCurrencies(JSON.parse(savedTargetCurrencies));
     }
+
+    const savedWallpaperSource = localStorage.getItem('zhuzh-wallpaper-source');
+    if (savedWallpaperSource) {
+      setWallpaperSource(savedWallpaperSource);
+    }
   }, []);
 
   const updateWallpaper = (index) => {
@@ -179,7 +238,8 @@ function App() {
   };
 
   const getActiveWallpapers = () => {
-    return showFavoritesOnly ? wallpapers.filter(wp => favorites.includes(wp)) : wallpapers;
+    const sourceWallpapers = getWallpapersBySource();
+    return showFavoritesOnly ? sourceWallpapers.filter(wp => favorites.includes(wp)) : sourceWallpapers;
   };
 
   const changeWallpaper = (direction) => {
@@ -283,6 +343,8 @@ function App() {
               />
             </div>
           )}
+
+
 
           <div className="content">
             <div className="space-y-4">
@@ -416,6 +478,8 @@ function App() {
                 <p>More Wallpapers</p>
               </TooltipContent>
             </Tooltip>
+
+
           </div>
         </div>
 
@@ -446,6 +510,10 @@ function App() {
           setBaseCurrency={setBaseCurrency}
           targetCurrencies={targetCurrencies}
           setTargetCurrencies={setTargetCurrencies}
+          wallpaperSource={wallpaperSource}
+          setWallpaperSource={setWallpaperSource}
+          customWallpapers={customWallpapers}
+          setCustomWallpapers={setCustomWallpapers}
         />
       </div>
     </>

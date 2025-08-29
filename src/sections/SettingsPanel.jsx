@@ -1,4 +1,4 @@
-import { X, Sun, Moon, Clock, Calendar, ToggleLeft, ToggleRight, DollarSign, Link } from 'lucide-react';
+import { X, Sun, Moon, Clock, Calendar, ToggleLeft, ToggleRight, DollarSign, Link, Folder } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
@@ -35,7 +35,8 @@ export default function SettingsPanel({
   layout, setLayout, showClock, setShowClock, showDate, setShowDate,
   format24h, setFormat24h, timezone, setTimezone,
   showCurrency, setShowCurrency, maxQuickLinks, setMaxQuickLinks,
-  baseCurrency, setBaseCurrency, targetCurrencies, setTargetCurrencies
+  baseCurrency, setBaseCurrency, targetCurrencies, setTargetCurrencies,
+  wallpaperSource, setWallpaperSource, customWallpapers, setCustomWallpapers
 }) {
   const handleThemeChange = (newTheme) => {
     setTheme(newTheme);
@@ -65,7 +66,7 @@ export default function SettingsPanel({
   return (
     <div className="fixed inset-0 z-50 flex">
       <div className="flex-1" onClick={() => setShowSettings(false)} />
-      <div className="w-80 bg-white shadow-xl transform transition-transform h-full duration-300 ease-in-out">
+      <div className="w-96 bg-white shadow-xl transform transition-transform h-full duration-300 ease-in-out">
         <div className="h-full p-6 w-full flex flex-col">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-lg font-semibold">Settings</h2>
@@ -326,6 +327,39 @@ export default function SettingsPanel({
                       Selected: {targetCurrencies.length}/4
                     </div>
                   </div>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-sm font-medium mb-3 flex items-center">
+                  <Folder className="h-4 w-4 mr-2" />
+                  Wallpaper Sources
+                </h3>
+                <div className="space-y-3 pl-6 border-l-2 border-gray-200">
+                  <div>
+                    <span className="text-sm font-medium mb-2 block">Source</span>
+                    <select 
+                      className="w-full p-2 border rounded text-sm"
+                      value={wallpaperSource}
+                      onChange={(e) => {
+                        setWallpaperSource(e.target.value);
+                        localStorage.setItem('zhuzh-wallpaper-source', e.target.value);
+                        // Auto-refresh wallpapers when source changes
+                        window.location.reload();
+                      }}
+                    >
+                      <option value="builtin">Zhuzh Default</option>
+                      <option value="custom">Custom Folder</option>
+                      {/* <option value="online">Online APIs</option> */}
+                      <option value="mixed">All Sources</option>
+                    </select>
+                  </div>
+                  {(wallpaperSource === 'custom' || wallpaperSource === 'mixed') && (
+                    <div className="text-xs text-gray-600 p-2 bg-gray-50 rounded">
+                      📁 Custom wallpapers: {customWallpapers?.length || 0} found<br/>
+                      💡 Downloads go to: Downloads/Zhuzh-Wallpapers/
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

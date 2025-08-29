@@ -68,16 +68,26 @@ export default function ImageProvider({ theme = 'light', onImageSelect }) {
 
   const downloadImage = async (imageUrl, filename) => {
     try {
-      const response = await fetch(imageUrl);
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename || 'wallpaper.jpg';
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
+      if (chrome?.downloads) {
+        // Download to Zhuzh folder
+        await chrome.downloads.download({
+          url: imageUrl,
+          filename: `Zhuzh-Wallpapers/${filename || 'wallpaper.jpg'}`,
+          saveAs: false
+        });
+      } else {
+        // Fallback for dev mode
+        const response = await fetch(imageUrl);
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename || 'wallpaper.jpg';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      }
     } catch (error) {
       console.error('Failed to download image:', error);
     }
