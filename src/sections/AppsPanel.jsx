@@ -1,4 +1,4 @@
-import { X, Calculator, Image, Grid3X3 } from 'lucide-react';
+import { X, Calculator, Image, Grid3X3, Timer } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
 const apps = [
@@ -15,6 +15,13 @@ const apps = [
     description: 'Browse and download wallpapers',
     icon: Image,
     emoji: '🖼️'
+  },
+  {
+    id: 'pomodoro-timer',
+    name: 'Pomodoro Timer',
+    description: 'Focus timer that follows you everywhere',
+    icon: Timer,
+    emoji: '🍅'
   }
 ];
 

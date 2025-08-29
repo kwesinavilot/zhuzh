@@ -3,3 +3,78 @@ chrome.runtime.onInstalled.addListener((details) => {
     chrome.tabs.create({ url: 'welcome.html' });
   }
 });
+
+// Pomodoro background timer
+let pomodoroInterval = null;
+
+// Handle messages from content script
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === 'acknowledgePomodoroComplete') {
+    handlePomodoroAcknowledge();
+  }
+});
+
+// Start background timer sync
+chrome.storage.onChanged.addListener((changes) => {
+  if (changes.pomodoroState) {
+    const state = changes.pomodoroState.newValue;
+    if (state?.isRunning && !pomodoroInterval) {
+      startBackgroundTimer();
+    } else if (!state?.isRunning && pomodoroInterval) {
+      stopBackgroundTimer();
+    }
+  }
+});
+
+function startBackgroundTimer() {
+  if (pomodoroInterval) return;
+  
+  pomodoroInterval = setInterval(async () => {
+    const result = await chrome.storage.local.get(['pomodoroState']);
+    const state = result.pomodoroState;
+    
+    if (state && state.isRunning && state.timeLeft > 0) {
+      const newTimeLeft = state.timeLeft - 1;
+      
+      if (newTimeLeft <= 0) {
+        // Timer complete
+        const newState = {
+          ...state,
+          timeLeft: state.isBreak ? 25 * 60 : 5 * 60,
+          isRunning: false,
+          isBreak: !state.isBreak,
+          sessions: state.isBreak ? state.sessions : state.sessions + 1
+        };
+        
+        await chrome.storage.local.set({ pomodoroState: newState });
+        
+        // Show notification
+        chrome.notifications.create({
+          type: 'basic',
+          iconUrl: 'logo-white.png',
+          title: state.isBreak ? 'Break Over! 💪' : 'Pomodoro Complete! 🍅',
+          message: state.isBreak ? 'Time to get back to work!' : 'Time for a 5-minute break!'
+        });
+      } else {
+        // Update time
+        await chrome.storage.local.set({
+          pomodoroState: { ...state, timeLeft: newTimeLeft }
+        });
+      }
+    } else {
+      stopBackgroundTimer();
+    }
+  }, 1000);
+}
+
+function stopBackgroundTimer() {
+  if (pomodoroInterval) {
+    clearInterval(pomodoroInterval);
+    pomodoroInterval = null;
+  }
+}
+
+function handlePomodoroAcknowledge() {
+  // User acknowledged timer completion - can add logic here
+  console.log('Pomodoro acknowledged');
+}

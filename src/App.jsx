@@ -9,6 +9,7 @@ import CurrencyConverter from "@/sections/CurrencyConverter";
 import CurrencyCalculator from "@/sections/CurrencyCalculator";
 import ImageProvider from "@/sections/ImageProvider";
 import AppsPanel from "@/sections/AppsPanel";
+import PomodoroApp from "@/sections/PomodoroApp";
 import { isExtensionContext } from './lib/essentials';
 import {
   Tooltip,
@@ -51,6 +52,7 @@ function App() {
   const [showCalculator, setShowCalculator] = useState(false);
   const [showImageProvider, setShowImageProvider] = useState(false);
   const [showApps, setShowApps] = useState(false);
+  const [showPomodoro, setShowPomodoro] = useState(false);
 
   const [wallpaperSource, setWallpaperSource] = useState('builtin');
   const [customWallpapers, setCustomWallpapers] = useState([]);
@@ -353,6 +355,14 @@ function App() {
             />
           )}
 
+          {/* Pomodoro App */}
+          {showPomodoro && (
+            <PomodoroApp 
+              theme={theme} 
+              onClose={() => setShowPomodoro(false)}
+            />
+          )}
+
 
 
           <div className="content">
@@ -464,6 +474,8 @@ function App() {
               setShowCalculator(true);
             } else if (appId === 'wallpaper-browser') {
               setShowImageProvider(true);
+            } else if (appId === 'pomodoro-timer') {
+              setShowPomodoro(true);
             }
           }}
           theme={theme}

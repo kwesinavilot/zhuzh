@@ -1,4 +1,4 @@
-# Zhuzh (0.5.3)
+# Zhuzh (0.6.0)
 Zhuzh is a comprehensive browser extension that transforms your new tab into a beautiful, productive workspace featuring SpaceX wallpapers, productivity tools, and customizable widgets.
 
 ## ✨ Core Features
@@ -38,7 +38,16 @@ Zhuzh is a comprehensive browser extension that transforms your new tab into a b
 - **Micro-Apps Panel**: Centralized launcher for advanced tools
 - **Currency Calculator**: Professional converter with custom amounts
 - **Wallpaper Browser**: Browse thousands of Pexels/Unsplash images
+- **Pomodoro Timer**: Persistent focus timer that follows you across ALL browser tabs
 - **Modal Interface**: Clean, centered modals with white backgrounds
+
+### 🍅 **Persistent Pomodoro**
+- **Cross-Tab Tracking**: Timer follows you to Gmail, YouTube, any website
+- **Draggable Widget**: Move timer anywhere on screen with position memory
+- **Smart Notifications**: Browser alerts for work/break transitions
+- **Session Counter**: Track completed pomodoros with visual progress
+- **Background Persistence**: Runs independently using Chrome service worker
+- **Real-Time Sync**: All tabs show same timer state instantly
 
 ### ⚙️ **Comprehensive Settings**
 - **Theme Control**: Light/Dark mode switching
@@ -183,6 +192,7 @@ Creates optimized build in `dist/` folder ready for Chrome Web Store submission.
 ### **Apps Panel**
 - **Currency Calculator**: Professional converter with swap function
 - **Wallpaper Browser**: Browse thousands of online wallpapers
+- **Pomodoro Timer**: 25/5 focus timer that persists across all browser tabs
 - **Download Integration**: Images save to Zhuzh folder automatically
 
 ## 🔧 Development

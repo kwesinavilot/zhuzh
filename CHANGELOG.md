@@ -1,5 +1,32 @@
 # Changelog
 
+## [0.6.0] - 2025-08-29
+
+### Added - Major Update
+- **Persistent Pomodoro Timer**: Focus timer that follows you across ALL browser tabs and websites
+- **Cross-Tab Productivity**: Timer persists on Gmail, YouTube, any website - impossible to ignore
+- **Draggable Timer Widget**: Move timer anywhere on screen with click-and-drag functionality
+- **Smart Notifications**: Browser alerts for work/break transitions with permission management
+- **Session Tracking**: Count completed pomodoros with visual progress circle
+- **Background Timer Logic**: Runs independently of tabs using Chrome service worker
+- **Real-Time Sync**: All tabs show same timer state via Chrome Storage API
+
+### Enhanced
+- **Visibility Control**: Increased opacity (70%) for better readability while staying subtle
+- **Position Persistence**: Timer remembers drag location across browser sessions
+- **Immediate Display**: Shows instantly when started, even on Zhuzh new tab
+- **Content Script Injection**: Seamless overlay on every website without disruption
+- **Productivity Integration**: First new tab extension with true cross-browser productivity tracking
+
+### Technical
+- **Chrome Storage API**: Real-time state synchronization across all tabs
+- **Content Scripts**: Universal website injection with <all_urls> permission
+- **Service Worker**: Background timer logic independent of tab lifecycle
+- **Notification API**: Browser-native alerts with custom icons and messages
+- **Drag & Drop**: Smooth dragging with viewport boundary detection
+
+---
+
 ## [0.5.2] - 2025-08-29
 
 ### Added
